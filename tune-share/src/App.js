@@ -1,25 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { UserLogin } from './Pages/user-login'
+import { UserProfile } from './Pages/user-profile'
+import { ArtistProfile } from './Pages/artist-profile'
+import { PlaylistPage } from './Pages/playlist-page'
+import { AlbumPage } from './Pages/album-page'
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<UserLogin />}/>
+        <Route path="/user-profile" element={<UserProfile />}/>
+        <Route path="/artist-profile" element={<ArtistProfile />}/>
+        <Route path="playlist-page/" element={<PlaylistPage />}/>
+        <Route path="album-page/" element={<AlbumPage />}/>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App;
