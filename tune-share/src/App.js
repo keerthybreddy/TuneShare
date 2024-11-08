@@ -5,6 +5,7 @@ import { UserProfile } from './Pages/user-profile'
 import { ArtistProfile } from './Pages/artist-profile'
 import { PlaylistPage } from './Pages/playlist-page'
 import { AlbumPage } from './Pages/album-page'
+import {RegistrationPage} from "./Pages/registration-page";
 
 function App() {
 
@@ -13,12 +14,16 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<UserLogin />}/>
+        <Route path="registration-page" element={<RegistrationPage />}/>
         <Route path="/user-profile" element={<UserProfile />}/>
         <Route path="/artist-profile" element={<ArtistProfile />}/>
-        <Route path="playlist-page/" element={<PlaylistPage />}/>
-        <Route path="album-page/" element={<AlbumPage />}/>
+        <Route path="/playlist-page" element={<PlaylistPage />}/>
+        <Route path="/album-page" element={<AlbumPage />}/>
       </Routes>
     </Router>
+
+
+
   )
 }
 
