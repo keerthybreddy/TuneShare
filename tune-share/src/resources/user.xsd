@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- GLOBAL: userID (UNIQUE) -->
+    <xsd:element name="userID">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer"/>
+        </xsd:simpleType>
+    </xsd:element>
+
     <xsd:complexType name="User">
         <xsd:all>
-            <!-- userID (UNIQUE) -->
-            <xsd:element name="userID" minOccurs="1"/>
-
             <!-- name (firstName / lastName) -->
             <xsd:element name="name" minOccurs="1">
                 <xsd:complexType>
