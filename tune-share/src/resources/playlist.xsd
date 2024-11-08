@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- include user and song xml schemas -->
+    <xsd:include schemaLocation="user.xsd"/>
+
+    <!-- GLOBAL: playlistID (COMPOSITE UNIQUE) -->
+    <xsd:complexType name="playlistID">
+        <xsd:sequence>
+            <xsd:element name="PID" type="xsd:integer"/>
+            <xsd:element ref="userID"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Playlist">
+        <xsd:all>
+            <!-- date created -->
+            <xsd:element name="dateCreated" type="xsd:date"/>
+        </xsd:all>
+    </xsd:complexType>
+
+</xsd:schema>
