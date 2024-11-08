@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:complexType name="User">
+        <xsd:all>
+            <!-- userID (UNIQUE) -->
+            <xsd:element name="userID" minOccurs="1"/>
+
+            <!-- name (firstName / lastName) -->
+            <xsd:element name="name" minOccurs="1">
+                <xsd:complexType>
+                    <xsd:all>
+                        <xsd:element name="firstName" type="xsd:string" minOccurs="1"/>
+                        <xsd:element name="lastName" type="xsd:string" minOccurs="1"/>
+                    </xsd:all>
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- email (UNIQUE) -->
+            <xsd:element name="email" type="xsd:string" minOccurs="1"/>
+
+            <!-- password (UNIQUE) -->
+            <xsd:element name="password" type="xsd:string" minOccurs="1"/>
+        </xsd:all>
+    </xsd:complexType>
+</xsd:schema>
