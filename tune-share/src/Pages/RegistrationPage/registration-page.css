@@ -28,7 +28,7 @@ body, html {
 }
 
 /* Header styling */
-.header {
+.registration-header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,6 +101,6 @@ body, html {
 
 }
 
-.button button:hover {
+.register-button button:hover {
     background-color: #1e6b29;
 }

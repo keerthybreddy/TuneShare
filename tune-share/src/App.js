@@ -1,5 +1,5 @@
 import './App.css';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import {HashRouter as Router, Routes, Route} from 'react-router-dom'
 import { UserLogin } from './Pages/UserLoginPage/user-login'
 import { UserProfile } from './Pages/UserProfilePage/user-profile'
 import { ArtistProfile } from './Pages/ArtistProfilePage/artist-profile'
@@ -13,6 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<UserLogin/>} />
         <Route path="/user-login-page" element={<UserLogin />}/>
         <Route path="registration-page" element={<RegistrationPage />}/>
         <Route path="/user-profile" element={<UserProfile />}/>
