@@ -41,23 +41,23 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ## Steps to Push to Remote Repository
 
-### Navigate to your projet folder
+### 1. Navigate to your projet folder
 
 cd path/to/your/project     
 
-### Check current status
+### 2. Check current status
 
 git status
 
-### Stage all changes
+### 3. Stage all changes
 
 git add .                        
 
-### Commit Changes with a message
+### 4. Commit Changes with a message
 
 git commit -m "Your commit message" 
 
-### Push to the remote Repository
+### 5. Push to the remote Repository
 
 git push origin main             
 
