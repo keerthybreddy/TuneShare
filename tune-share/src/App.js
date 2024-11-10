@@ -1,11 +1,11 @@
 import './App.css';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
-import { UserLogin } from './Pages/user-login'
-import { UserProfile } from './Pages/user-profile'
-import { ArtistProfile } from './Pages/artist-profile'
-import { PlaylistPage } from './Pages/playlist-page'
-import { AlbumPage } from './Pages/album-page'
-import {RegistrationPage} from "./Pages/registration-page";
+import { UserLogin } from './Pages/UserLoginPage/user-login'
+import { UserProfile } from './Pages/UserProfilePage/user-profile'
+import { ArtistProfile } from './Pages/ArtistProfilePage/artist-profile'
+import { PlaylistPage } from './Pages/PlaylistPage/playlist-page'
+import { AlbumPage } from './Pages/AlbumPage/album-page'
+import {RegistrationPage} from "./Pages/RegistrationPage/registration-page";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<UserLogin />}/>
+        <Route path="/user-login-page" element={<UserLogin />}/>
         <Route path="registration-page" element={<RegistrationPage />}/>
         <Route path="/user-profile" element={<UserProfile />}/>
         <Route path="/artist-profile" element={<ArtistProfile />}/>
