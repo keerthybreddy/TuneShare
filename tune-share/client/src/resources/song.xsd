@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- include xml schema for artist -->
+    <xsd:include schemaLocation="artist.xsd"/>
+
+    <!-- GLOBAL: songID (UNIQUE) -->
+    <xsd:element name="songID">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer"/>
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:complexType name="Song">
+        <xsd:all>
+            <!-- song title -->
+            <xsd:element name="title" type="xsd:string" minOccurs="1"/>
+
+            <!-- song duration -->
+            <xsd:element name="duration" type="xsd:time" minOccurs="1"/>
+
+            <!-- artist of song (artistID reference to artist.xsd) -->
+            <xsd:element ref="artistID" minOccurs="1"/>
+        </xsd:all>
+    </xsd:complexType>
+</xsd:schema>

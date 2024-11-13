@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <!-- GLOBAL: artistID (UNIQUE) -->
+    <xsd:element name="artistID">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer"/>
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:complexType name="Artist">
+        <xsd:all>
+            <!-- artist name -->
+            <xsd:element name="name" type="xsd:string" minOccurs="1"/>
+
+            <!-- total songs -->
+            <xsd:element name="totalSongs" type="xsd:integer" minOccurs="1"/>
+        </xsd:all>
+    </xsd:complexType>
+</xsd:schema>

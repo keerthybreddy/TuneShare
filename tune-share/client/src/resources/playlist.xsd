@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- include user xml schema -->
+    <xsd:include schemaLocation="user.xsd"/>
+
+    <!-- GLOBAL: playlistID (UNIQUE) -->
+    <xsd:element name="playlistID">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer"/>
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:complexType name="Playlist">
+        <xsd:all>
+            <!-- date created -->
+            <xsd:element name="dateCreated" type="xsd:date"/>
+
+            <!-- owner of playlist (userID reference to user.xsd) -->
+            <xsd:element ref="userID"/>
+        </xsd:all>
+    </xsd:complexType>
+
+</xsd:schema>

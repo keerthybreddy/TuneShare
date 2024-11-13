@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <!-- include artist xml schema -->
+    <xsd:include schemaLocation="artist.xsd"/>
+
+    <!-- GLOBAL: albumID (UNIQUE) -->
+    <xsd:element name="albumID">
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:integer"/>
+        </xsd:simpleType>
+    </xsd:element>
+
+    <xsd:complexType name="Album">
+        <xsd:all>
+            <!-- release date -->
+            <xsd:element name="releaseDate" type="xsd:date"/>
+
+            <!-- number of songs -->
+            <xsd:element name="numSongs" type="xsd:integer"/>
+
+            <!-- artist of album (artistID reference to artist.xsd) -->
+            <xsd:element ref="artistID"/>
+        </xsd:all>
+    </xsd:complexType>
+</xsd:schema>
