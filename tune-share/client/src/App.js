@@ -7,32 +7,30 @@ import { PlaylistPage } from './Pages/PlaylistPage/playlist-page'
 import { AlbumPage } from './Pages/AlbumPage/album-page'
 import {RegistrationPage} from "./Pages/RegistrationPage/registration-page";
 import { useEffect, useState } from 'react'
+import axios from 'axios';
 
 function App() {
 
-  const [backendData, setBackendData] = useState([{}])
+  // const [backendData, setBackendData] = useState([{}])
 
-  useEffect(() => {
-    fetch("/api").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data)
-      }
-    )
-  }, [])
+  // useEffect(() => {
+  //   fetch("/api").then(
+  //     response => response.json()
+  //   ).then(
+  //     data => {
+  //       setBackendData(data)
+  //     }
+  //   )
+  // }, [])
+
+  const apiCall = () => {
+    axios.get('http://localhost:5000').then((data) => {
+      console.log(data)
+    })
+  }
 
   return (
     <div>
-      <div>
-        {(typeof backendData.users === 'undefined') ? (
-          <p>Loading...</p>
-        ): (
-          backendData.users.map((user, i) => (
-            <p key={i}>{user}</p>
-          ))
-        )}
-      </div>
       <Router>
         <Routes>
           <Route path="/" element={<UserLogin/>} />
@@ -44,7 +42,6 @@ function App() {
           <Route path="/album-page" element={<AlbumPage />}/>
         </Routes>
       </Router>
-
     </div>
 
   )
