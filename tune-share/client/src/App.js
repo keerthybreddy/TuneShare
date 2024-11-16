@@ -11,18 +11,6 @@ import axios from 'axios';
 
 function App() {
 
-  // const [backendData, setBackendData] = useState([{}])
-
-  // useEffect(() => {
-  //   fetch("/api").then(
-  //     response => response.json()
-  //   ).then(
-  //     data => {
-  //       setBackendData(data)
-  //     }
-  //   )
-  // }, [])
-
   const apiCall = () => {
     axios.get('http://localhost:5000').then((data) => {
       console.log(data)
