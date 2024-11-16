@@ -31,4 +31,19 @@ app.post('/registration-page', (req, res) => {
     })
 })
 
+app.post('/user-login-page', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+    db.query("SELECT * FROM User WHERE username = ? AND password = ?", [username, password], (err, result) => {
+        console.log("result:", result);
+        if (result.length === 0) {
+            console.log('Login unsuccessful!')
+            return res.send('Login unsuccessful!')
+        } else {
+            console.log('Login successful!')
+            return res.send({message: req.body})
+        }
+    })
+})
+
 app.listen(5000, () => {console.log("Server started on port 5000")})
