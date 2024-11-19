@@ -13,7 +13,6 @@ function App() {
 
   const apiCall = () => {
     axios.get('http://localhost:5000').then((data) => {
-      console.log(data)
     })
   }
 

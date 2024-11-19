@@ -18,7 +18,6 @@ export function RegistrationPage() {
     const submitHandler = e => {
         e.preventDefault()
         axios.post('http://localhost:5000/registration-page', {username: username, firstName: firstName, lastName: lastName, password: password, email: email}).then((data) => {
-            console.log(data)
             setUsername('')
             setFirstName('')
             setLastName('')

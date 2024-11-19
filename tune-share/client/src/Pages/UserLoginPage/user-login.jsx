@@ -16,7 +16,7 @@ export function UserLogin() {
         e.preventDefault()
         axios.post('http://localhost:5000/user-login-page', {username: username, password: password})
         .then(data => {
-            console.log('Response from server:', data);
+            // console.log('Response from server:', data);
             if (data.data === "Login unsuccessful!") {
                 setLoginStatus(false)
             } else {
@@ -49,7 +49,7 @@ export function UserLogin() {
             <div className="login-button">
                 <button onClick={validateUserHandler}>Sign In</button>
             </div>
-            {loginStatus === false ? <p>Login was unsuccessful, please try again!</p> : loginStatus === true ? <Navigate to="/user-profile" state={loginStatus} replace={true} /> : null}
+            {loginStatus === false ? <p>Login was unsuccessful, please try again!</p> : loginStatus === true ? <Navigate to="/user-profile" replace={true} state={{username}}/> : null}
         </div>
     )
 }
