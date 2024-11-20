@@ -97,6 +97,10 @@ app.get('/users-page', (req, res) => {
     });
 });
 
+
+
+app.listen(5000, () => {console.log("Server started on port 5000")})
+
 // send the user's liked songs, created playlists, and friends in this post request
 // app.post('/user-profile-page', (req, res) => {
 //     const username = req.body.username;
@@ -111,5 +115,3 @@ app.get('/users-page', (req, res) => {
 //         }
 //     })
 // })
-
-app.listen(5000, () => {console.log("Server started on port 5000")})
