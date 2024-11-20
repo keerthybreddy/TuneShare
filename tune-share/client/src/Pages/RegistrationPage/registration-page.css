@@ -12,7 +12,9 @@ body, html {
     display: flex;
     flex-direction: column;
     width: 360px;
-    padding: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     background: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
@@ -49,7 +51,7 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 
 .registration-input {
@@ -83,7 +85,8 @@ body, html {
 .register-button {
     width: 100%;
     max-width: 280px;
-    margin-top: 40px;
+    margin-top: 20px;
+
 }
 
 .register-button button {
