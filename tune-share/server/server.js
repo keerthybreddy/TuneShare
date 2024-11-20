@@ -46,12 +46,34 @@ app.post('/user-login-page', (req, res) => {
     })
 })
 
-app.post('/album-page', (req, res) => {
+app.post('/album-page/:albumIDParam', (req, res) => {
     const AlbumID = req.body.AlbumID;
     const AlbumName = req.body.AlbumName;
     const ArtistID = req.body.ArtistID;
 
-    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName FROM Albums JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?", [3], (err, result) => {
+    const { albumIDParam } = req.params;
+    console.log("PARAM: ", albumIDParam);
+
+    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName FROM Albums JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?", [albumIDParam], (err, result) => {
+        console.log("result:", result);
+        if (result === 0) {
+            console.log('Page not found.')
+            return res.send('Page not found.')
+        } else {
+            console.log('Page found!')
+            return res.send(result)
+        }
+    })
+})
+
+app.post('/artist-profile/:artistIDParam', (req, res) => {
+    const AlbumID = req.body.AlbumID;
+    const AlbumName = req.body.AlbumName;
+    const ArtistID = req.body.ArtistID;
+
+    const { artistIDParam } = req.params;
+
+    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, Artists.ArtistID FROM Artists JOIN Albums ON Artists.ArtistID = Albums.ArtistID WHERE Artists.ArtistID = ?", [artistIDParam], (err, result) => {
         console.log("result:", result);
         if (result === 0) {
             console.log('Page not found.')
