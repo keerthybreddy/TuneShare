@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : '1219@KKtv_02', //place your own mysql account password
+    password : 'zorbak123', //place your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -84,6 +84,18 @@ app.post('/artist-profile/:artistIDParam', (req, res) => {
         }
     })
 })
+
+app.get('/users-page', (req, res) => {
+    const query = 'SELECT username, firstName, lastName FROM User';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching users:', err);
+            res.status(500).send('Server error');
+            return;
+        }
+        res.json(results); // Send the fetched users as JSON
+    });
+});
 
 // send the user's liked songs, created playlists, and friends in this post request
 // app.post('/user-profile-page', (req, res) => {
