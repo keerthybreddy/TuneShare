@@ -6,7 +6,8 @@ import { ArtistProfile } from './Pages/ArtistProfilePage/artist-profile'
 import { PlaylistPage } from './Pages/PlaylistPage/playlist-page'
 import { AlbumPage } from './Pages/AlbumPage/album-page'
 import {RegistrationPage} from "./Pages/RegistrationPage/registration-page";
-import { useEffect, useState } from 'react'
+import {CatalogPage} from "./Pages/CatalogPage/catalog-page";
+import {UsersPage} from "./Pages/UsersPage/users-page";
 import axios from 'axios';
 
 function App() {
@@ -22,11 +23,13 @@ function App() {
         <Routes>
           <Route path="/" element={<UserLogin/>} />
           <Route path="/user-login-page" element={<UserLogin />}/>
-          <Route path="registration-page" element={<RegistrationPage />}/>
+          <Route path="/registration-page" element={<RegistrationPage />}/>
           <Route path="/user-profile" element={<UserProfile />}/>
-          <Route path="/artist-profile" element={<ArtistProfile />}/>
+          <Route path="/artist-profile/:artistIDParam" element={<ArtistProfile />}/>
           <Route path="/playlist-page" element={<PlaylistPage />}/>
-          <Route path="/album-page" element={<AlbumPage />}/>
+          <Route path="/album-page/:albumIDParam" element={<AlbumPage />}/>
+          <Route path="/catalog-page/" element={<CatalogPage />}/>
+          <Route path="/users-page/" element={<UsersPage />}/>
         </Routes>
       </Router>
     </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 export function AlbumPage() {
@@ -13,8 +14,10 @@ export function AlbumPage() {
     const listSongIDs = SongID.map((ID) => <li>{ID}</li>);
     const listSongNames = SongName.map((Name) => <li>{Name}</li>);
 
+    let { albumIDParam } = useParams();
+
     useEffect(() => {
-        axios.post('http://localhost:5000/album-page/', {AlbumID: AlbumID, AlbumName: AlbumName, ArtistID: ArtistID, SongID: SongID, SongName: SongName})
+        axios.post(`http://localhost:5000/album-page/${albumIDParam}`, {AlbumID: AlbumID, AlbumName: AlbumName, ArtistID: ArtistID, SongID: SongID, SongName: SongName})
         .then(data => {
             console.log('Response from server:', data.data);
             setAlbumID(data.data[0].AlbumID);

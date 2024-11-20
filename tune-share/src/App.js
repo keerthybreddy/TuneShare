@@ -19,6 +19,7 @@ function App() {
         <Route path="/user-profile" element={<UserProfile />}/>
         <Route path="/artist-profile" element={<ArtistProfile />}/>
         <Route path="/playlist-page" element={<PlaylistPage />}/>
+        {/* <Route path="/album-page" element={<AlbumPage />}/> */}
         <Route path="/album-page" element={<AlbumPage />}/>
       </Routes>
     </Router>
