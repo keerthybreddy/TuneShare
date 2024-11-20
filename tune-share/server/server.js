@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : 'zorbak123', //place your own mysql account password
+    password : 'password', //place your own mysql account password
     database : 'TuneShareDB'
 });
 
