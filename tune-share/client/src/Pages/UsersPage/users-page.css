@@ -1,0 +1,75 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(to bottom, #3b8247, #1a5e31);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.users-container {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    padding: 20px;
+    text-align: center;
+}
+
+.users-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.users-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+    color: #333;
+}
+
+.user-item:last-child {
+    border-bottom: none;
+}
+
+.user-info {
+    flex: 1;
+    text-align: left;
+}
+
+.follow-button {
+    padding: 8px 16px;
+    background-color: #268e36;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.follow-button:hover {
+    background-color: #1e6b29;
+}
+
+.unfollow-button {
+    background-color: #d9534f;
+}
+
+.unfollow-button:hover {
+    background-color: #b52d2a;
+}
