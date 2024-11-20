@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : 'cs157asqlworkbench!', //place your own mysql account password
+    password : '1219@KKtv_02', //place your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -73,7 +73,7 @@ app.post('/artist-profile/:artistIDParam', (req, res) => {
 
     const { artistIDParam } = req.params;
 
-    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Artists.ArtistName, Artists.ArtistID FROM Artists JOIN Albums ON Artists.ArtistID = Albums.ArtistID WHERE Artists.ArtistID = ?", [artistIDParam], (err, result) => {
+    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Songs.SongID, Songs.SongName, Artists.ArtistID,  Artists.ArtistName, Genres.GenreName FROM Artists JOIN Albums ON Artists.ArtistID = Albums.ArtistID JOIN Songs ON Albums.AlbumID = Songs.AlbumID JOIN Genres ON Artists.GenreID = Genres.GenreID WHERE Artists.ArtistID = ?;", [artistIDParam], (err, result) => {
         console.log("result:", result);
         if (result === 0) {
             console.log('Page not found.')
@@ -84,20 +84,6 @@ app.post('/artist-profile/:artistIDParam', (req, res) => {
         }
     })
 })
-
-app.get('/users-page', (req, res) => {
-    db.query("SELECT username, firstName, lastName, email FROM User", (err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500).send('Error retrieving users.');
-        } else {
-            res.status(200).json(result); // Send the fetched data as JSON
-        }
-    });
-});
-
-
-
 
 // send the user's liked songs, created playlists, and friends in this post request
 // app.post('/user-profile-page', (req, res) => {

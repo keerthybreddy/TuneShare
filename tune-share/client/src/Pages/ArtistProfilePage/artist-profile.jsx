@@ -1,61 +1,98 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import pfp from "./sza-profile.jpeg";
+import "./artist-profile.css";
 
 export function ArtistProfile() {
+    const [albums, setAlbums] = useState([]); // Array of albums with details
+    const [songs, setSongs] = useState([]); // Array of songs with details
+    const [artistName, setArtistName] = useState(''); // Artist's name
+    const [genre, setGenre] = useState(''); // Artist's genre
 
-    const [AlbumID, setAlbumID] = useState([]);
-    const [AlbumName, setAlbumName] = useState([]);
-    const [ArtistID, setArtistID] = useState('');
-    const [ArtistName, setArtistName] = useState('');
-    // const [GenreID, setGenreID] = useState('');
-    const [isAlbumsIterated, setIsAlbumsIterated] = useState(false);
-
-    let { artistIDParam } = useParams();
-
-    const listAlbumIDs = AlbumID.map((ID) => <li>{ID}</li>);
-    const listAlbumNames = AlbumName.map((Name) => <li><a href="http://localhost:3000/#/album-page/:albumIDParam">{Name}</a></li>);  //incorrect albumIDParam, need to figure out how to get the albumID for each album and insert it into the url
+    let { artistIDParam } = useParams(); // Get artist ID from the URL
 
     useEffect(() => {
-        axios.post(`http://localhost:5000/artist-profile/${artistIDParam}`, {AlbumID: AlbumID, AlbumName: AlbumName, ArtistID: ArtistID, ArtistName: ArtistName})
-        .then(data => {
-            console.log('Response from server:', data.data);
-            setArtistID(data.data[0].ArtistID);
-            setArtistName(data.data[0].ArtistName);  
-            
-            const albumIDList = [];
-            const albumNameList = [];
+        axios
+            .post(`http://localhost:5000/artist-profile/${artistIDParam}`)
+            .then((response) => {
+                const data = response.data;
 
-            if (isAlbumsIterated === false) {
-                for(let i = 0; i < data.data.length; i++) {
-                    albumIDList.push(data.data[i].AlbumID);
-                    albumNameList.push(data.data[i].AlbumName);
+                if (data.length > 0) {
+                    // Set artist name and genre
+                    setArtistName(data[0].ArtistName);
+                    setGenre(data[0].GenreName);
+
+                    // Process albums and songs
+                    const albumList = [];
+                    const songList = [];
+
+                    data.forEach((item) => {
+                        if (!albumList.some((album) => album.id === item.AlbumID)) {
+                            albumList.push({
+                                id: item.AlbumID,
+                                name: item.AlbumName,
+                                image: item.AlbumImage || "default-album.jpg", // Placeholder if no image
+                            });
+                        }
+
+                        songList.push({
+                            id: item.SongID,
+                            name: item.SongName,
+                            albumID: item.AlbumID,
+                            image: item.SongImage || "default-song.jpg", // Placeholder if no image
+                        });
+                    });
+
+                    setAlbums(albumList); // Update albums state
+                    setSongs(songList); // Update songs state
                 }
-                setAlbumID(albumIDList);
-                setAlbumName(albumNameList);
-                setIsAlbumsIterated(true);
-            }
-
-            for (let i = 0; i < AlbumID.length; i++) {
-                console.log(AlbumID[i]);
-                console.log(AlbumName[i]);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        })
-    });
+            })
+            .catch((error) => {
+                console.error("Error fetching artist profile:", error);
+            });
+    }, [artistIDParam]);
 
     return (
-        <>
-        <h1>Artist ID: {ArtistID}</h1>
-        <h1>Artist Name: {ArtistName}</h1>
+        <div className="artist-container">
+            <div className="artist-header">
+                <img src={pfp} alt="artist" className="artist-picture" />
+                <h1 className="artist-name">{artistName}</h1>
+            </div>
+            <div className="artist-content">
+                <div className="popular-songs">
+                    <h2>Popular Songs</h2>
+                    <ul className="song-list">
+                        {songs.map((song, index) => (
+                            <li key={index} className="song-item">
+                                <img src={song.image} alt="song-thumbnail" className="song-image" />
+                                <a href={`http://localhost:3000/#/song/${song.id}`} className="song-name">
+                                    {song.name}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-        <h1>Album IDs</h1>
-        <ul>{listAlbumIDs}</ul>
+                <div className="artist-albums">
+                    <h2>Albums</h2>
+                    <ul className="album-list">
+                        {albums.map((album, index) => (
+                            <li key={index} className="album-item">
+                                <img src={album.image} alt="album-thumbnail" className="album-image" />
+                                <div className="album-name">
+                                    <a href={`http://localhost:3000/#/album/${album.id}`}>{album.name}</a>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-        <h1>Album Names</h1>
-        <ul>{listAlbumNames}</ul>
-        </>
-    )
+                <div className="genre">
+                    <h2>Genre</h2>
+                    <p>{genre}</p>
+                </div>
+            </div>
+        </div>
+    );
 }
