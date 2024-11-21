@@ -8,6 +8,7 @@ import { AlbumPage } from './Pages/AlbumPage/album-page'
 import {RegistrationPage} from "./Pages/RegistrationPage/registration-page";
 import {CatalogPage} from "./Pages/CatalogPage/catalog-page";
 import {UsersPage} from "./Pages/UsersPage/users-page";
+import {GenrePage} from "./Pages/GenrePage/genre-page";
 import axios from 'axios';
 import {AuthProvider} from "./context/AuthContext";
 
@@ -32,8 +33,9 @@ function App() {
                   <Route path="/artist-profile/:artistIDParam" element={<ArtistProfile />}/>
                   <Route path="/playlist-page" element={<PlaylistPage />}/>
                   <Route path="/album-page/:albumIDParam" element={<AlbumPage />}/>
-                  <Route path="/catalog-page/" element={<CatalogPage />}/>
                   <Route path="/users-page/" element={<UsersPage />}/>
+                  <Route path="/catalog-page" element={<CatalogPage />}/>
+                  <Route path="/genre-page/:genreIDParam" element={<GenrePage />}/>
               </Routes>
           </Router>
       </AuthProvider>

@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : 'zorbak123', //place your own mysql account password
+    password : 'password', //replace with your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -151,21 +151,31 @@ app.post("/unfollow", (req, res) => {
     });
 });
 
+app.post('/catalog-page', (req, res) => {
+    db.query("SELECT * FROM Genres;", (err, result) => {
+        console.log("result:", result);
+        if (result.length === 0) {
+            console.log('Page not found.')
+            return res.send('Page not found.')
+        } else {
+            console.log('Page found!')
+            return res.send(result)
+        }
+    })
+})
 
+app.post('/genre-page/:genreIDParam', (req, res) => {
+    const { genreIDParam } = req.params;
+	db.query("SELECT Artists.ArtistID, Artists.ArtistName, Albums.AlbumID, Albums.AlbumName, Songs.SongID, Songs.SongName, Genres.GenreID, Genres.GenreName FROM Artists JOIN Genres ON Artists.GenreID = Genres.GenreID JOIN Albums ON Artists.ArtistID = Albums.ArtistID JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Genres.GenreID = ?;", [genreIDParam], (err, result) => {
+        console.log("result:", result);
+        if (result.length === 0) {
+            console.log('Page not found.')
+            return res.send('Page not found.')
+        } else {
+            console.log('Page found!')
+            return res.send(result)
+        }
+    })
+})
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
-
-// send the user's liked songs, created playlists, and friends in this post request
-// app.post('/user-profile-page', (req, res) => {
-//     const username = req.body.username;
-//     db.query("SELECT * FROM User WHERE username = ?", [username], (err, result) => {
-//         console.log("result:", result);
-//         if (result.length === 0) {
-//             console.log('Login unsuccessful!')
-//             return res.send('Login unsuccessful!')
-//         } else {
-//             console.log('Login successful!')
-//             return res.send({message: req.body})
-//         }
-//     })
-// })

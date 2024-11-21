@@ -81,7 +81,7 @@ export function ArtistProfile() {
                             <li key={index} className="album-item">
                                 <img src={album.image} alt="album-thumbnail" className="album-image" />
                                 <div className="album-name">
-                                    <a href={`http://localhost:3000/#/album/${album.id}`}>{album.name}</a>
+                                    <a href={`http://localhost:3000/#/album-page/${album.id}`}>{album.name}</a>
                                 </div>
                             </li>
                         ))}
