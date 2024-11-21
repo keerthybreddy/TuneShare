@@ -9,6 +9,7 @@ import {RegistrationPage} from "./Pages/RegistrationPage/registration-page";
 import {CatalogPage} from "./Pages/CatalogPage/catalog-page";
 import {UsersPage} from "./Pages/UsersPage/users-page";
 import axios from 'axios';
+import {AuthProvider} from "./context/AuthContext";
 
 function App() {
 
@@ -17,21 +18,25 @@ function App() {
     })
   }
 
+
+  // wrap in AuthProvider to pass currentUser globally
   return (
     <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<UserLogin/>} />
-          <Route path="/user-login-page" element={<UserLogin />}/>
-          <Route path="/registration-page" element={<RegistrationPage />}/>
-          <Route path="/user-profile" element={<UserProfile />}/>
-          <Route path="/artist-profile/:artistIDParam" element={<ArtistProfile />}/>
-          <Route path="/playlist-page" element={<PlaylistPage />}/>
-          <Route path="/album-page/:albumIDParam" element={<AlbumPage />}/>
-          <Route path="/catalog-page/" element={<CatalogPage />}/>
-          <Route path="/users-page/" element={<UsersPage />}/>
-        </Routes>
-      </Router>
+      <AuthProvider>
+          <Router>
+              <Routes>
+                  <Route path="/" element={<UserLogin/>} />
+                  <Route path="/user-login-page" element={<UserLogin />}/>
+                  <Route path="/registration-page" element={<RegistrationPage />}/>
+                  <Route path="/user-profile" element={<UserProfile />}/>
+                  <Route path="/artist-profile/:artistIDParam" element={<ArtistProfile />}/>
+                  <Route path="/playlist-page" element={<PlaylistPage />}/>
+                  <Route path="/album-page/:albumIDParam" element={<AlbumPage />}/>
+                  <Route path="/catalog-page/" element={<CatalogPage />}/>
+                  <Route path="/users-page/" element={<UsersPage />}/>
+              </Routes>
+          </Router>
+      </AuthProvider>
     </div>
 
   )

@@ -2,27 +2,13 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import './user-profile.css';
 import pfp from "../ArtistProfilePage/sza-profile.jpeg";
+import {useAuthContext} from "../../context/AuthContext";
+import {useEffect} from "react";
 
 export function UserProfile() {
     const navigate = useNavigate();
     const {state} = useLocation();
     const {username} = state;
-    
-    // const validateUserHandler = e => {
-    //     e.preventDefault()
-    //     axios.post('http://localhost:5000/user-profile-page', {username: username})
-    //     .then(data => {
-    //         console.log('Response from server:', data);
-    //         if (data.data === "Login unsuccessful!") {
-    //             setLoginStatus(false)
-    //         } else {
-    //             setLoginStatus(true)
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('Error:', error);
-    //     });
-    // }
 
     return (
         <div className="user-profile-container">

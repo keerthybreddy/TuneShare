@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : 'password', //place your own mysql account password
+    password : 'zorbak123', //place your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -41,6 +41,7 @@ app.post('/user-login-page', (req, res) => {
             return res.send('Login unsuccessful!')
         } else {
             console.log('Login successful!')
+            //console.log(localStorage.getItem('currentUser'));
             return res.send({message: req.body})
         }
     })
@@ -85,15 +86,68 @@ app.post('/artist-profile/:artistIDParam', (req, res) => {
     })
 })
 
-app.get('/users-page', (req, res) => {
-    const query = 'SELECT username, firstName, lastName FROM User';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Error fetching users:', err);
-            res.status(500).send('Server error');
-            return;
+
+app.get("/users-page", (req, res) => {
+    console.log(req.url);  // Log the full URL
+    const currentUser = req.query.currUser;
+    console.log(currentUser);
+    console.log("Current User:", currentUser);  // Log the currentUser value
+    if (!currentUser) {
+        return res.status(400).send({ error: "No current user provided" });
+    }
+
+    const query = `
+        SELECT
+            u.username,
+            u.firstName,
+            u.lastName,
+            CASE
+                WHEN f.userID = ? AND f.friendID = u.username THEN TRUE
+                ELSE FALSE
+            END AS followed
+        FROM User u
+        LEFT JOIN Friends f
+            ON f.friendID = u.username
+    `;
+
+    db.query(query, [currentUser], (error, results) => {
+        if (error) {
+            console.error("Error fetching users:", error);
+            return res.status(500).send({ error: "Failed to fetch users." });
         }
-        res.json(results); // Send the fetched users as JSON
+        res.status(200).send(results);
+    });
+});
+
+// Add a friend
+app.post("/follow", (req, res) => {
+    const { userID, friendID } = req.body;
+    const query = `
+        INSERT INTO Friends (userID, friendID)
+        VALUES (?, ?)
+    `;
+    db.query(query, [userID, friendID], (error, results) => {
+        if (error) {
+            console.error("Error adding friend:", error);
+            return res.status(500).send({ error: "Failed to add friend." });
+        }
+        res.status(200).send({ message: "Friend added successfully!" });
+    });
+});
+
+// Remove a friend
+app.post("/unfollow", (req, res) => {
+    const { userID, friendID } = req.body;
+    const query = `
+        DELETE FROM Friends
+        WHERE userID = ? AND friendID = ?
+    `;
+    db.query(query, [userID, friendID], (error, results) => {
+        if (error) {
+            console.error("Error removing friend:", error);
+            return res.status(500).send({ error: "Failed to remove friend." });
+        }
+        res.status(200).send({ message: "Friend removed successfully!" });
     });
 });
 

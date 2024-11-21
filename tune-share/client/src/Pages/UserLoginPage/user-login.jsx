@@ -5,28 +5,37 @@ import lockIcon from './lockIcon.png'
 import {Link, Navigate} from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
+import {useAuthContext} from "../../context/AuthContext";
 
 export function UserLogin() {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loginStatus, setLoginStatus] = useState(null)
+    const { setCurrentUser } = useAuthContext();  // Access setCurrentUser function from context
 
-    const validateUserHandler = e => {
-        e.preventDefault()
-        axios.post('http://localhost:5000/user-login-page', {username: username, password: password})
-        .then(data => {
-            // console.log('Response from server:', data);
-            if (data.data === "Login unsuccessful!") {
-                setLoginStatus(false)
-            } else {
-                setLoginStatus(true)
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+    // Define login method
+    const login = async (username, password) => {
+        try {
+            axios.post('http://localhost:5000/user-login-page', {username: username, password: password})
+                .then(data => {
+                    if (data.data === "Login unsuccessful!") {
+                        setLoginStatus(false)
+                    } else {
+                        setCurrentUser({username: username})
+                        localStorage.setItem('currentUser', JSON.stringify({username: username}))
+                        setLoginStatus(true)
+                    }
+                })
+        } catch (error) {
+            console.error('Login error:', error);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        login(username, password); // Call login method with entered username and password
+    };
 
     return (
         <div className="login-container">
@@ -47,9 +56,26 @@ export function UserLogin() {
                 <Link to="/registration-page">Create an Account</Link>
             </div>
             <div className="login-button">
-                <button onClick={validateUserHandler}>Sign In</button>
+                <button onClick={handleSubmit}>Sign In</button>
             </div>
             {loginStatus === false ? <p>Login was unsuccessful, please try again!</p> : loginStatus === true ? <Navigate to="/user-profile" replace={true} state={{username}}/> : null}
         </div>
     )
 }
+
+// -----------OLD VALIDATION --------
+
+// const validateUserHandler = e => {
+//     e.preventDefault()
+//     axios.post('http://localhost:5000/user-login-page', {username: username, password: password})
+//     .then(data => {
+//         if (data.data === "Login unsuccessful!") {
+//             setLoginStatus(false)
+//         } else {
+//             setLoginStatus(true)
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+// }
