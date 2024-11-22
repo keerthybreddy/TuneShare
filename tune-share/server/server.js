@@ -48,24 +48,29 @@ app.post('/user-login-page', (req, res) => {
 })
 
 app.post('/album-page/:albumIDParam', (req, res) => {
-    const AlbumID = req.body.AlbumID;
-    const AlbumName = req.body.AlbumName;
-    const ArtistID = req.body.ArtistID;
+    const { albumIDParam } = req.params; // Extract albumIDParam from URL
+    console.log("PARAM: ", albumIDParam); // Debug log
 
-    const { albumIDParam } = req.params;
-    console.log("PARAM: ", albumIDParam);
-
-    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName FROM Albums JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?", [albumIDParam], (err, result) => {
-        console.log("result:", result);
-        if (result === 0) {
-            console.log('Page not found.')
-            return res.send('Page not found.')
-        } else {
-            console.log('Page found!')
-            return res.send(result)
+    db.query(
+        "SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName, Artists.ArtistName FROM Albums JOIN Songs ON Albums.AlbumID = Songs.AlbumID JOIN Artists ON Albums.ArtistID = Artists.ArtistID WHERE Albums.AlbumID = ?",
+        [albumIDParam],
+        (err, result) => {
+            if (err) {
+                console.error("Error executing query:", err);
+                res.status(500).send({ error: "Database query failed" });
+                return;
+            }
+            if (result.length === 0) {
+                console.log("No album found");
+                res.status(404).send({ error: "No album found with the given ID" });
+                return;
+            }
+            console.log("Query result:", result); // Debug log
+            res.status(200).send(result); // Send the query result
         }
-    })
-})
+    );
+});
+
 
 app.post('/artist-profile/:artistIDParam', (req, res) => {
     const AlbumID = req.body.AlbumID;
@@ -177,5 +182,7 @@ app.post('/genre-page/:genreIDParam', (req, res) => {
         }
     })
 })
+
+
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
