@@ -3,6 +3,7 @@ import logo from './logo.png';
 import userIcon from './userIcon.png';
 import lockIcon from './lockIcon.png';
 import emailIcon from './emailIcon.png';
+import name from './name-icon.png';
 import {Link} from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
@@ -38,9 +39,11 @@ export function RegistrationPage() {
                     <input placeholder="Username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div className="registration-input">
+                    <img src={name} alt ="Icons" className="registration-icons"/>
                     <input placeholder="First Name" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                 </div>
                 <div className="registration-input">
+                    <img src={name} alt="Icons" className="registration-icons"/>
                     <input placeholder="Last Name" type="text"  value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                 </div>
                 <div className="registration-input">
