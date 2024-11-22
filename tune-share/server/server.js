@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : 'password', //replace with your own mysql account password
+    password : '1219@KKtv_02', //replace with your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -184,8 +184,7 @@ app.post('/genre-page/:genreIDParam', (req, res) => {
 })
 
 
-<<<<<<< HEAD
-=======
+
 app.get("/friends-list", (req, res) => {
     const currentUser = req.query.currUser;
     if (!currentUser) {
@@ -205,6 +204,5 @@ app.get("/friends-list", (req, res) => {
         res.status(200).send(results);
     });
 });
->>>>>>> origin/main
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
