@@ -60,5 +60,6 @@ export function RegistrationPage() {
                 <button onClick={submitHandler}>Register</button>
             </div>
         </div>
+        //
     );
 }
