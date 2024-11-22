@@ -184,5 +184,27 @@ app.post('/genre-page/:genreIDParam', (req, res) => {
 })
 
 
+<<<<<<< HEAD
+=======
+app.get("/friends-list", (req, res) => {
+    const currentUser = req.query.currUser;
+    if (!currentUser) {
+        return res.status(400).send({ error: "No current user provided" });
+    }
+    const query = `
+        SELECT u.username, u.firstName, u.lastName
+        FROM User u
+        INNER JOIN Friends f ON u.username = f.friendID
+        WHERE f.userID = ?
+    `;
+    db.query(query, [currentUser], (error, results) => {
+        if (error) {
+            console.error("Error fetching friends list:", error);
+            return res.status(500).send({ error: "Failed to fetch friends list." });
+        }
+        res.status(200).send(results);
+    });
+});
+>>>>>>> origin/main
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
