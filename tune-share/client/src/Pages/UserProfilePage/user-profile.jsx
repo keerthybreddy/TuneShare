@@ -21,6 +21,7 @@ export function UserProfile() {
                     <button onClick={() => navigate('/album-page/1')}>Albums Page</button>
                     <button onClick={() => navigate('/artist-profile/1')}>Artist Profile</button>
                     <button onClick={() => navigate('/users-page/')}>Users Page</button>
+                    <button onClick={() => navigate('/catalog-page/')}>Catalog Page</button>
                 </div>
                 <h1>Liked Songs</h1>
                 <h1>Friends List</h1>
