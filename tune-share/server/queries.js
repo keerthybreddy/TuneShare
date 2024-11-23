@@ -84,7 +84,8 @@ export async function getSongsByArtistName(artistName) {
     } catch (error) {
         console.error("Database error in getSongsByArtistName:", error);
     }
+}
 
 
 
-getSongsByArtistName('Taylor Swift');
+getSongsByArtistName('Taylor Swift'); 

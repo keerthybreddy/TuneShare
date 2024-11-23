@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : '1219@KKtv_02', //replace with your own mysql account password
+    password : 'cs157asqlworkbench!', //replace with your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -48,29 +48,24 @@ app.post('/user-login-page', (req, res) => {
 })
 
 app.post('/album-page/:albumIDParam', (req, res) => {
-    const { albumIDParam } = req.params; // Extract albumIDParam from URL
-    console.log("PARAM: ", albumIDParam); // Debug log
+    const AlbumID = req.body.AlbumID;
+    const AlbumName = req.body.AlbumName;
+    const ArtistID = req.body.ArtistID;
 
-    db.query(
-        "SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName, Artists.ArtistName FROM Albums JOIN Songs ON Albums.AlbumID = Songs.AlbumID JOIN Artists ON Albums.ArtistID = Artists.ArtistID WHERE Albums.AlbumID = ?",
-        [albumIDParam],
-        (err, result) => {
-            if (err) {
-                console.error("Error executing query:", err);
-                res.status(500).send({ error: "Database query failed" });
-                return;
-            }
-            if (result.length === 0) {
-                console.log("No album found");
-                res.status(404).send({ error: "No album found with the given ID" });
-                return;
-            }
-            console.log("Query result:", result); // Debug log
-            res.status(200).send(result); // Send the query result
+    const { albumIDParam } = req.params;
+    console.log("PARAM: ", albumIDParam);
+
+    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName FROM Albums JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?", [albumIDParam], (err, result) => {
+        console.log("result:", result);
+        if (result === 0) {
+            console.log('Page not found.')
+            return res.send('Page not found.')
+        } else {
+            console.log('Page found!')
+            return res.send(result)
         }
-    );
-});
-
+    })
+})
 
 app.post('/artist-profile/:artistIDParam', (req, res) => {
     const AlbumID = req.body.AlbumID;
@@ -184,7 +179,6 @@ app.post('/genre-page/:genreIDParam', (req, res) => {
 })
 
 
-
 app.get("/friends-list", (req, res) => {
     const currentUser = req.query.currUser;
     if (!currentUser) {
@@ -204,5 +198,96 @@ app.get("/friends-list", (req, res) => {
         res.status(200).send(results);
     });
 });
+
+app.get("/songs", (req, res) => {
+    const query = `
+        SELECT 
+            Songs.SongID, 
+            Songs.SongName, 
+            Albums.AlbumName 
+        FROM Songs 
+        JOIN Albums ON Songs.AlbumID = Albums.AlbumID
+    `;
+
+    db.query(query, (error, results) => {
+        if (error) {
+            console.error("Error fetching songs:", error);
+            return res.status(500).send({ error: "Failed to fetch songs." });
+        }
+        res.status(200).send(results);
+    });
+});
+
+
+
+app.get("/fetch-playlists", (req, res) => {
+    const query = "SELECT * FROM Playlists";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Error fetching playlists:", err);
+            res.status(500).send({ error: "Failed to fetch playlists." });
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+app.post("/add-song-to-playlist", (req, res) => {
+    const { playlistID, songID } = req.body;
+    const query = "INSERT INTO PlaylistSongs (PlaylistID, SongID) VALUES (?, ?)";
+    db.query(query, [playlistID, songID], (err) => {
+        if (err) {
+            console.error("Error adding song to playlist:", err);
+            res.status(500).send({ error: "Failed to add song to playlist." });
+        } else {
+            res.send({ message: "Song added successfully!" });
+        }
+    });
+});
+
+app.get("/get-playlists", (req, res) => {
+    const query = "SELECT * FROM Playlists";
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error("Error fetching playlists:", err);
+            res.status(500).send({ error: "Failed to fetch playlists." });
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+app.get("/get-playlist-songs", (req, res) => {
+    const { playlistID } = req.query;
+    const query = `
+        SELECT Songs.SongID, Songs.SongName 
+        FROM PlaylistSongs 
+        JOIN Songs ON PlaylistSongs.SongID = Songs.SongID 
+        WHERE PlaylistID = ?
+    `;
+    db.query(query, [playlistID], (err, results) => {
+        if (err) {
+            console.error(`Error fetching songs for playlist ${playlistID}:`, err);
+            res.status(500).send({ error: "Failed to fetch songs in playlist." });
+        } else {
+            res.send(results);
+        }
+    });
+});
+
+app.post("/remove-song-from-playlist", (req, res) => {
+    const { playlistID, songID } = req.body;
+    const query = "DELETE FROM PlaylistSongs WHERE PlaylistID = ? AND SongID = ?";
+    db.query(query, [playlistID, songID], (err) => {
+        if (err) {
+            console.error("Error removing song from playlist:", err);
+            res.status(500).send({ error: "Failed to remove song from playlist." });
+        } else {
+            res.send({ message: "Song removed successfully!" });
+        }
+    });
+});
+
+
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
