@@ -11,6 +11,7 @@ export function UserProfile() {
     const { username } = state;
     const { currentUser } = useAuthContext();
     const [friends, setFriends] = useState([]);
+    const [likedSongs, setLikedSongs] = useState([]);
 
     // Fetch the list of friends
     useEffect(() => {
@@ -29,6 +30,29 @@ export function UserProfile() {
                 console.error("Error fetching friends:", error);
             }
         };
+
+        /**
+         * ------------------------------------------------------------------------------------
+         * Implement fetchLikedSongs
+         * ------------------------------------------------------------------------------------
+         */
+        const fetchLikedSongs = async () => {
+            if(!currentUser) {
+                console.error("No user is logged in");
+                return;
+            }
+
+            try {
+                const response = await axios.get (
+                    `http://localhost:5000/liked-songs-list?currUser=${currentUser.username}`
+                );
+                console.log("Liked songs fetched:", response.data);
+                setLikedSongs(response.data);
+            } catch(error) {
+                console.error("Error fetching liked songs:", error)
+            }
+        }
+
         fetchFriends();
     }, [currentUser]);
 
@@ -40,19 +64,18 @@ export function UserProfile() {
 
             <div className="user-profile-content">
                 <div className="user-profile-sidebar">
+                    <h1>Navigation</h1>
                     <button onClick={() => navigate("/album-page/1")}>Albums Page</button>
                     <button onClick={() => navigate("/artist-profile/1")}>Artist Profile</button>
                     <button onClick={() => navigate("/users-page/")}>Users Page</button>
                     <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
                     <button onClick={() => navigate("/playlist-page/")}>Playlist Page</button>
                 </div>
+                <div className="liked-songs-column">
+                    <h1>Liked Songs</h1>
+                </div>
 
-                <div className="user-columns">
-                    <div className="liked-songs-column">
-                        <h1>Liked Songs</h1>
-                    </div>
-
-                    <div className="friends-list-column">
+                <div className="friends-list-column">
                         <h1>Friends List</h1>
                         {friends.length === 0 ? (
                             <p>No friends yet.</p>
@@ -67,7 +90,6 @@ export function UserProfile() {
                                 ))}
                             </ul>
                         )}
-                    </div>
                 </div>
             </div>
         </div>
