@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useAuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import "./genre-page.css";
 
@@ -12,6 +13,7 @@ export function GenrePage() {
     const [dropdownVisible, setDropdownVisible] = useState({});
     const [hovering, setHovering] = useState(null);
 
+    const { currentUser } = useAuthContext();
     let { genreIDParam } = useParams();
 
     useEffect(() => {
@@ -72,6 +74,24 @@ export function GenrePage() {
             });
     };
 
+    const handleAddToLikedSongs = (songID) => {
+        if (!currentUser) {
+            alert("You need to be logged in to like songs.");
+            return;
+        }
+
+        axios
+            .post("http://localhost:5000/add-to-liked-songs", {
+                userID: currentUser.username,
+                songID,
+            })
+            .then(() => alert("Song added to Liked Songs successfully!"))
+            .catch((error) => {
+                console.error("Error adding song to liked songs:", error);
+                alert("Failed to add song to Liked Songs.");
+            });
+    };
+
     const toggleDropdown = (songID) => {
         setDropdownVisible((prevState) => ({
             ...prevState,
@@ -98,7 +118,7 @@ export function GenrePage() {
     return (
         <div className="genre-page">
             <header className="genre-header">
-                <h1>{genreName}</h1> 
+                <h1>{genreName}</h1>
             </header>
             <main className="genre-content">
                 <div className="left-container">
@@ -153,6 +173,14 @@ export function GenrePage() {
                                             onMouseEnter={() => handleMouseEnter(song.SongID)}
                                             onMouseLeave={() => handleMouseLeave(song.SongID)}
                                         >
+                                            <button
+                                                className="dropdown-item-genre"
+                                                onClick={() =>
+                                                    handleAddToLikedSongs(song.SongID)
+                                                }
+                                            >
+                                                Add to Liked Songs
+                                            </button>
                                             {Playlists.map((playlist) => (
                                                 <button
                                                     key={playlist.PlaylistID}

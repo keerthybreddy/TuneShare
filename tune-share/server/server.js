@@ -12,7 +12,7 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host : 'localhost',
     user : 'root',
-    password : 'password', //replace with your own mysql account password
+    password : 'cs157asqlworkbench!', //replace with your own mysql account password
     database : 'TuneShareDB'
 });
 
@@ -285,6 +285,55 @@ app.post("/remove-song-from-playlist", (req, res) => {
         } else {
             res.send({ message: "Song removed successfully!" });
         }
+    });
+});
+
+app.post("/add-to-liked-songs", (req, res) => {
+    const { userID, songID } = req.body;
+    console.log("Adding to liked songs:", { userID, songID });
+
+    if (!userID || !songID) {
+        console.error("Missing userID or songID");
+        return res.status(400).send({ error: "User ID or Song ID missing." });
+    }
+
+    const query = `
+        INSERT INTO LikedSongs (UserID, SongID)
+        VALUES (?, ?)
+    `;
+
+    db.query(query, [userID, songID], (error, results) => {
+        if (error) {
+            console.error("SQL Error:", error);
+            return res.status(500).send({ error: "Failed to add song to Liked Songs." });
+        }
+        res.status(200).send({ message: "Song added to Liked Songs successfully!" });
+    });
+});
+
+
+
+
+app.get("/liked-songs-list", (req, res) => {
+    const currentUser = req.query.currUser;
+
+    if (!currentUser) {
+        return res.status(400).send({ error: "No current user provided." });
+    }
+
+    const query = `
+        SELECT Songs.SongID, Songs.SongName
+        FROM LikedSongs
+        JOIN Songs ON LikedSongs.SongID = Songs.SongID
+        WHERE LikedSongs.UserID = ?
+    `;
+
+    db.query(query, [currentUser], (error, results) => {
+        if (error) {
+            console.error("Error fetching liked songs:", error);
+            return res.status(500).send({ error: "Failed to fetch liked songs." });
+        }
+        res.status(200).send(results);
     });
 });
 
