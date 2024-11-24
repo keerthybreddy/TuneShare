@@ -52,6 +52,24 @@ export function UserProfile() {
         fetchLikedSongs();
     }, [currentUser]);
 
+    // Remove a song from liked songs
+    const removeLikedSong = async (songID) => {
+        try {
+            await axios.post("http://localhost:5000/remove-liked-song", {
+                userID: currentUser.username,
+                songID,
+            });
+            alert("Song removed from Liked Songs!");
+
+            setLikedSongs((prevSongs) =>
+                prevSongs.filter((song) => song.SongID !== songID)
+            );
+        } catch (error) {
+            console.error("Error removing liked song:", error);
+            alert("Failed to remove song from Liked Songs.");
+        }
+    };
+
     return (
         <div className="user-profile-container">
             <div className="user-profile-header">
@@ -77,6 +95,12 @@ export function UserProfile() {
                             {likedSongs.map((song) => (
                                 <li key={song.SongID} className="liked-song-item">
                                     <strong>{song.SongName}</strong>
+                                    <button
+                                        className="remove-liked-song-button"
+                                        onClick={() => removeLikedSong(song.SongID)}
+                                    >
+                                        x
+                                    </button>
                                 </li>
                             ))}
                         </ul>

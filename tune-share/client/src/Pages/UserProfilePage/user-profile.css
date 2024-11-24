@@ -109,8 +109,7 @@
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.liked-songs-list,
-.friends-list {
+.liked-songs-list {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -118,8 +117,10 @@
     text-align: center;
 }
 
-.liked-song-item,
-.friend-item {
+.liked-song-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 5px;
     padding: 10px;
     background-color: #333;
@@ -127,4 +128,37 @@
     color: #fff;
     text-align: left;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.remove-liked-song-button {
+    background: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.remove-liked-song-button:hover {
+    background: #cc0000;
+}
+
+.friends-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.friend-item {
+    margin: 5px 0;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    color: #fff;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
 }

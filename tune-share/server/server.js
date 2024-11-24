@@ -337,6 +337,21 @@ app.get("/liked-songs-list", (req, res) => {
     });
 });
 
+app.post("/remove-liked-song", (req, res) => {
+    const { userID, songID } = req.body;
+    const query = `
+        DELETE FROM LikedSongs
+        WHERE userID = ? AND songID = ?
+    `;
+    db.query(query, [userID, songID], (err) => {
+        if (err) {
+            console.error("Error removing liked song:", err);
+            res.status(500).send({ error: "Failed to remove liked song." });
+        } else {
+            res.send({ message: "Song removed successfully!" });
+        }
+    });
+});
 
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
