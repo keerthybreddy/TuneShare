@@ -4,6 +4,7 @@ import axios from "axios";
 import "./genre-page.css";
 
 export function GenrePage() {
+    const [genreName, setGenreName] = useState("");
     const [Artists, setArtists] = useState([]);
     const [Albums, setAlbums] = useState([]);
     const [Songs, setSongs] = useState([]);
@@ -16,50 +17,46 @@ export function GenrePage() {
     useEffect(() => {
         axios
             .post(`http://localhost:5000/genre-page/${genreIDParam}`, {})
-            .then((data) => {
-                console.log("Response from server:", data.data);
+            .then((response) => {
+                const data = response.data;
 
-                const artists = [];
-                const albums = [];
-                const songs = [];
+                if (data.length > 0) {
+                    const genre = data[0].GenreName;
+                    const artists = [];
+                    const albums = [];
+                    const songs = [];
 
-                data.data.forEach((item) => {
-                    if (!artists.some((a) => a.ArtistID === item.ArtistID)) {
-                        artists.push({
-                            ArtistID: item.ArtistID,
-                            ArtistName: item.ArtistName,
+                    data.forEach((item) => {
+                        if (!artists.some((a) => a.ArtistID === item.ArtistID)) {
+                            artists.push({
+                                ArtistID: item.ArtistID,
+                                ArtistName: item.ArtistName,
+                            });
+                        }
+                        if (!albums.some((a) => a.AlbumID === item.AlbumID)) {
+                            albums.push({
+                                AlbumID: item.AlbumID,
+                                AlbumName: item.AlbumName,
+                            });
+                        }
+                        songs.push({
+                            SongID: item.SongID,
+                            SongName: item.SongName,
                         });
-                    }
-                    if (!albums.some((a) => a.AlbumID === item.AlbumID)) {
-                        albums.push({
-                            AlbumID: item.AlbumID,
-                            AlbumName: item.AlbumName,
-                        });
-                    }
-                    songs.push({
-                        SongID: item.SongID,
-                        SongName: item.SongName,
-                        AlbumName: item.AlbumName,
-                        ArtistName: item.ArtistName,
                     });
-                });
 
-                setArtists(artists);
-                setAlbums(albums);
-                setSongs(songs);
+                    setGenreName(genre);
+                    setArtists(artists);
+                    setAlbums(albums);
+                    setSongs(songs);
+                }
             })
-            .catch((error) => {
-                console.error("Error fetching genre data:", error);
-            });
+            .catch((error) => console.error("Error fetching genre data:", error));
 
         axios
             .get("http://localhost:5000/fetch-playlists")
-            .then((response) => {
-                setPlaylists(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching playlists:", error);
-            });
+            .then((response) => setPlaylists(response.data))
+            .catch((error) => console.error("Error fetching playlists:", error));
     }, [genreIDParam]);
 
     const handleAddToPlaylist = (playlistID, songID) => {
@@ -68,9 +65,7 @@ export function GenrePage() {
                 playlistID,
                 songID,
             })
-            .then(() => {
-                alert("Song added to playlist successfully!");
-            })
+            .then(() => alert("Song added to playlist successfully!"))
             .catch((error) => {
                 console.error("Error adding song to playlist:", error);
                 alert("Failed to add song to playlist.");
@@ -102,70 +97,84 @@ export function GenrePage() {
 
     return (
         <div className="genre-page">
-            <h1>Genre ID: {genreIDParam}</h1>
-            <h1>Artists</h1>
-            <ul className="artist-list">
-                {Artists.map((artist) => (
-                    <li key={artist.ArtistID} className="artist-item">
-                        <Link to={`/artist-profile/${artist.ArtistID}`}>
-                            {artist.ArtistName}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            <h1>Albums</h1>
-            <ul className="album-list">
-                {Albums.map((album) => (
-                    <li key={album.AlbumID} className="album-item">
-                        <Link to={`/album-page/${album.AlbumID}`}>
-                            {album.AlbumName}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            <h1>Songs</h1>
-            <ul className="song-list-genre">
-                {Songs.map((song) => (
-                    <li
-                        key={song.SongID}
-                        className="song-item-genre"
-                        onMouseEnter={() => handleMouseEnter(song.SongID)}
-                        onMouseLeave={() => handleMouseLeave(song.SongID)}
-                    >
-                        <div className="song-details">
-                            <span className="song-name">{song.SongName}</span>
-                        </div>
-                        <button
-                            className="add-button-genre"
-                            onClick={() => toggleDropdown(song.SongID)}
-                        >
-                            ➕
-                        </button>
-                        {dropdownVisible[song.SongID] && (
-                            <div
-                                className="dropdown-menu-genre"
-                                onMouseEnter={() => handleMouseEnter(song.SongID)}
-                                onMouseLeave={() => handleMouseLeave(song.SongID)}
-                            >
-                                {Playlists.map((playlist) => (
+            <header className="genre-header">
+                <h1>{genreName}</h1> 
+            </header>
+            <main className="genre-content">
+                <div className="left-container">
+                    <section className="genre-section">
+                        <h2>Artists</h2>
+                        <ul className="artist-list">
+                            {Artists.map((artist) => (
+                                <li key={artist.ArtistID} className="artist-item">
+                                    <Link to={`/artist-profile/${artist.ArtistID}`}>
+                                        {artist.ArtistName}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                    <section className="genre-section">
+                        <h2>Albums</h2>
+                        <ul className="album-list">
+                            {Albums.map((album) => (
+                                <li key={album.AlbumID} className="album-item">
+                                    <Link to={`/album-page/${album.AlbumID}`}>
+                                        {album.AlbumName}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                </div>
+                <div className="right-container">
+                    <section className="genre-section">
+                        <h2>Songs</h2>
+                        <ul className="song-list-genre">
+                            {Songs.map((song) => (
+                                <li
+                                    key={song.SongID}
+                                    className="song-item-genre"
+                                    onMouseEnter={() => handleMouseEnter(song.SongID)}
+                                    onMouseLeave={() => handleMouseLeave(song.SongID)}
+                                >
+                                    <div className="song-details">
+                                        <span className="song-name">{song.SongName}</span>
+                                    </div>
                                     <button
-                                        key={playlist.PlaylistID}
-                                        className="dropdown-item-genre"
-                                        onClick={() =>
-                                            handleAddToPlaylist(
-                                                playlist.PlaylistID,
-                                                song.SongID
-                                            )
-                                        }
+                                        className="add-button-genre"
+                                        onClick={() => toggleDropdown(song.SongID)}
                                     >
-                                        Add to {playlist.PlaylistName}
+                                        ➕
                                     </button>
-                                ))}
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
+                                    {dropdownVisible[song.SongID] && (
+                                        <div
+                                            className="dropdown-menu-genre"
+                                            onMouseEnter={() => handleMouseEnter(song.SongID)}
+                                            onMouseLeave={() => handleMouseLeave(song.SongID)}
+                                        >
+                                            {Playlists.map((playlist) => (
+                                                <button
+                                                    key={playlist.PlaylistID}
+                                                    className="dropdown-item-genre"
+                                                    onClick={() =>
+                                                        handleAddToPlaylist(
+                                                            playlist.PlaylistID,
+                                                            song.SongID
+                                                        )
+                                                    }
+                                                >
+                                                    Add to {playlist.PlaylistName}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                </div>
+            </main>
         </div>
     );
 }
