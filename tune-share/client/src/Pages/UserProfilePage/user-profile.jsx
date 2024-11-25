@@ -1,5 +1,4 @@
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./user-profile.css";
 import { useAuthContext } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -74,8 +73,10 @@ export function UserProfile() {
         <div className="user-profile-container">
             <div className="user-profile-header">
                 <h1 className="user-name">Welcome, {username}!</h1>
+                <button className="logout-button" onClick={() => navigate("/user-login-page")} >
+                    Logout
+                </button>
             </div>
-
             <div className="user-profile-content">
                 <div className="user-profile-sidebar">
                     <h1></h1>
@@ -85,7 +86,6 @@ export function UserProfile() {
                     <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
                     <button onClick={() => navigate("/playlist-page/")}>Playlist Page</button>
                 </div>
-
                 <div className="liked-songs-column">
                     <h1>Liked Songs</h1>
                     {likedSongs.length === 0 ? (
@@ -106,7 +106,6 @@ export function UserProfile() {
                         </ul>
                     )}
                 </div>
-
                 <div className="friends-list-column">
                     <h1>Friends List</h1>
                     {friends.length === 0 ? (

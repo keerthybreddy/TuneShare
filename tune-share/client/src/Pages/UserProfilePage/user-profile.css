@@ -23,27 +23,26 @@
     padding: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    height: 120px; /* Fixed height for the header */
-    flex-shrink: 0; /* Prevent shrinking when the container is resized */
+    height: 20%;
+    flex-shrink: 0;
     width: 95%;
-    margin-top: 3%;
+    margin-top: 2%;
     margin-bottom: 2%;
 }
 
 .user-name {
     color: #f2f2f2;
-    font-size: 36px;
+    font-size: 40px;
     font-weight: bold;
-    margin: 0;
+    padding: 50px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Main content area */
 .user-profile-content {
     background: #181414;
     color: white;
-    height: calc(100% - 40px); /* Full height minus container padding */
-    width: calc(100% - 40px);
+    height: 100%;
+    width: 97%;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
@@ -61,7 +60,7 @@
     flex: 1;
     overflow-y: auto;
     width: 30%;
-    height: 400px;
+    height: 95%;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
@@ -74,7 +73,7 @@
 .friends-list-column h1,
 .user-profile-sidebar h1 {
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
     margin-bottom: 15px;
 }
 
@@ -163,3 +162,23 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     font-size: 16px;
 }
+
+.logout-button {
+    position: absolute;
+    right: 460px;
+    top: 175px;
+    background-color: #181414;
+    color: white;
+    border: none;
+    padding: 8px 13px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button:hover {
+    background-color: #ff4d4d;
+}
+
