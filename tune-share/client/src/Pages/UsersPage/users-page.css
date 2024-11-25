@@ -9,39 +9,69 @@ body, html {
 }
 
 .users-container {
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    width: 400px;
+    font-family: Arial, sans-serif;
+    background: #181414;
+    width: 1100px;
+    height: 700px;
     padding: 20px;
-    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    margin: auto; 
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .users-header {
-    font-size: 24px;
+    margin: 0 auto;
+    text-align: center;
+    width: 85%;
+    height: 6%;
+    color: #f2f2f2;
+    font-size: 45px;
     font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 50px;
+    background: #252323;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 2%;
+    margin-top: 3%;
+}
+
+.users-list-container {
+    margin: 0 auto;
+    background: #252323;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 0%;
+    overflow-y: auto;
+    margin-top: 3%;
 }
 
 .users-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    width: 44%;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
 }
 
 .user-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
-    font-size: 16px;
-    color: #333;
-}
-
-.user-item:last-child {
-    border-bottom: none;
+    padding: 15px;
+    background: #333;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-size: 14px;
 }
 
 .user-info {
@@ -50,26 +80,37 @@ body, html {
 }
 
 .follow-button {
-    padding: 8px 16px;
-    background-color: #268e36;
+    background: #268e36;
     color: white;
     border: none;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 5px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .follow-button:hover {
-    background-color: #1e6b29;
+    background: #1e6b29;
+    transform: scale(1.05);
 }
 
 .unfollow-button {
-    background-color: #d9534f;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .unfollow-button:hover {
-    background-color: #b52d2a;
+    background: #cc0000;
+    transform: scale(1.05);
 }
