@@ -1,9 +1,10 @@
 import './registration-page.css';
-import logo from './logo.png';
-import userIcon from './userIcon.png';
-import lockIcon from './lockIcon.png';
-import emailIcon from './emailIcon.png';
-import name from './name-icon.png';
+import logo from '../../assets/logo.png';
+import userIcon from '../../assets/userIcon.png';
+import lockIcon from '../../assets/lockIcon.png';
+import emailIcon from '../../assets/email.png';
+import name from '../../assets/name-icon.png';
+
 import {Link} from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';

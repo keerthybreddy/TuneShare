@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import pfp from "../ArtistProfilePage/sza-profile.jpeg";
+import pfp from "../../assets/sza-profile.jpeg";
 import "./album-page.css";
 import "../ArtistProfilePage/artist-profile.css";
 

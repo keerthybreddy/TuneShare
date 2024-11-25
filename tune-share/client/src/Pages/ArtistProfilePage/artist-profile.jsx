@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import pfp from "./sza-profile.jpeg";
+import pfp from "../../assets/sza-profile.jpeg";
 
 export function ArtistProfile() {
     const [albums, setAlbums] = useState([]); // Array of albums with details

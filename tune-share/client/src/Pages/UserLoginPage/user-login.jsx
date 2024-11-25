@@ -1,7 +1,7 @@
 import './user-login.css'
-import logo from './logo.png'
-import userIcon from './userIcon.png'
-import lockIcon from './lockIcon.png'
+import logo from '../../assets/logo.png'
+import userIcon from '../../assets/userIcon.png'
+import lockIcon from '../../assets/lockIcon.png'
 import {Link, Navigate} from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
