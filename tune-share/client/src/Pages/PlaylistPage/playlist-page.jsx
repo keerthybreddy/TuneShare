@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuthContext } from "../../context/AuthContext";
 import "./playlist-page.css";
 
 export function PlaylistPage() {
   const [playlists, setPlaylists] = useState([]);
   const [songsByPlaylist, setSongsByPlaylist] = useState({});
+  const [showNavigation, setShowNavigation] = useState(false);
+  const navigate = useNavigate();
+  const { currentUser } = useAuthContext();
 
   useEffect(() => {
     axios
@@ -14,7 +19,9 @@ export function PlaylistPage() {
 
         const fetchSongsPromises = response.data.map((playlist) =>
           axios
-            .get(`http://localhost:5000/get-playlist-songs?playlistID=${playlist.PlaylistID}`)
+            .get(
+              `http://localhost:5000/get-playlist-songs?playlistID=${playlist.PlaylistID}`
+            )
             .then((res) => ({
               playlistID: playlist.PlaylistID,
               songs: res.data,
@@ -57,6 +64,32 @@ export function PlaylistPage() {
   return (
     <div className="playlist-page-container">
       <h1 className="playlist">Playlists</h1>
+      <button
+        className="waffle-button"
+        onClick={() => setShowNavigation((prev) => !prev)}
+      >
+        {showNavigation ? "x" : "☰"}
+      </button>
+      {showNavigation && (
+        <div className="navigation-sidebar">
+          <button
+            onClick={() =>
+              navigate("/user-profile", {
+                state: { username: currentUser?.username },
+              })
+            }
+          >
+            Profile
+          </button>
+          <button onClick={() => navigate("/album-page/1")}>Albums Page</button>
+          <button onClick={() => navigate("/artist-profile/1")}>
+            Artist Profile
+          </button>
+          <button onClick={() => navigate("/users-page/")}>Users Page</button>
+          <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
+        </div>
+      )}
+
       <div className="playlists">
         {playlists.map((playlist) => (
           <div key={playlist.PlaylistID} className="playlist-container">

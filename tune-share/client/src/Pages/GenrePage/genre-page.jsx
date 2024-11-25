@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import "./genre-page.css";
@@ -12,8 +12,10 @@ export function GenrePage() {
     const [Playlists, setPlaylists] = useState([]);
     const [dropdownVisible, setDropdownVisible] = useState({});
     const [hovering, setHovering] = useState(null);
+    const [showNavigation, setShowNavigation] = useState(false);
 
     const { currentUser } = useAuthContext();
+    const navigate = useNavigate();
     let { genreIDParam } = useParams();
 
     useEffect(() => {
@@ -119,6 +121,30 @@ export function GenrePage() {
         <div className="genre-page">
             <header className="genre-header">
                 <h1>{genreName}</h1>
+                <button
+                    className="waffle-button"
+                    onClick={() => setShowNavigation((prev) => !prev)}
+                >
+                    {showNavigation ? "x" : "☰"}
+                </button>
+                {showNavigation && (
+                    <div className="navigation-sidebar">
+                        <button
+                            onClick={() =>
+                                navigate("/user-profile", {
+                                    state: { username: currentUser?.username },
+                                })
+                            }
+                        >
+                            Profile
+                        </button>
+                        <button onClick={() => navigate("/album-page/1")}>Albums Page</button>
+                        <button onClick={() => navigate("/artist-profile/1")}>Artist Profile</button>
+                        <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
+                        <button onClick={() => navigate("/users-page/")}>Users Page</button>
+                        <button onClick={() => navigate("/playlist-page/")}>Playlist Page</button>
+                    </div>
+                )}
             </header>
             <main className="genre-content">
                 <div className="left-container">
