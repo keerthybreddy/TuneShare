@@ -78,7 +78,7 @@ export function UserProfile() {
 
             <div className="user-profile-content">
                 <div className="user-profile-sidebar">
-                    <h1>Navigation</h1>
+                    <h1></h1>
                     <button onClick={() => navigate("/album-page/1")}>Albums Page</button>
                     <button onClick={() => navigate("/artist-profile/1")}>Artist Profile</button>
                     <button onClick={() => navigate("/users-page/")}>Users Page</button>

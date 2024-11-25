@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./users-page.css";
 import { useAuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function UsersPage() {
     const [users, setUsers] = useState([]);
     const [following, setFollowing] = useState(new Set());
+    const [showNavigation, setShowNavigation] = useState(false);
     const { currentUser } = useAuthContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -56,6 +59,26 @@ export function UsersPage() {
     return (
         <div className="users-container">
             <h1 className="users-header">Users Page</h1>
+
+            <button
+                className="waffle-button"
+                onClick={() => setShowNavigation((prev) => !prev)}
+            >
+                {showNavigation ? "x" : "☰"}
+            </button>
+
+            {showNavigation && (
+                <div className="navigation-sidebar">
+                    <button onClick={() => navigate("/user-profile", { state: { username: currentUser.username } })}>
+                        Profile
+                    </button>
+                    <button onClick={() => navigate("/album-page/1")}>Albums Page</button>
+                    <button onClick={() => navigate("/artist-profile/1")}>Artist Profile</button>
+                    <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
+                    <button onClick={() => navigate("/playlist-page/")}>Playlist Page</button>
+                </div>
+            )}
+
             <div className="users-list-container">
                 <ul className="users-list">
                     {users
