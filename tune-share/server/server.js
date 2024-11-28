@@ -14,8 +14,6 @@ const db = mysql.createPool({
     user : 'root',
     password : 'password', //replace with your own mysql account password
     database : 'TuneShareDB'
-    password : 'password', //replace with your own mysql account password
-    database : 'TuneShareDB'
 });
 
 app.post('/registration-page', (req, res) => {
