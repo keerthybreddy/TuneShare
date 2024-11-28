@@ -7,6 +7,7 @@ export function ArtistProfile() {
     const [songs, setSongs] = useState([]); // Array of songs with details
     const [artistName, setArtistName] = useState(''); // Artist's name
     const [genre, setGenre] = useState(''); // Artist's genre
+    const [artistProfile, setArtistProfile] = useState(""); // State for artist profile picture
 
     let { artistIDParam } = useParams(); // Get artist ID from the URL
 
@@ -17,33 +18,37 @@ export function ArtistProfile() {
                 const data = response.data;
 
                 if (data.length > 0) {
-                    // Set artist name and genre
+                    // Set artist name, genre, and profile image
                     setArtistName(data[0].ArtistName);
                     setGenre(data[0].GenreName);
+                    setArtistProfile(data[0].ArtistProfile); // Set artist profile image
 
                     // Process albums and songs
                     const albumList = [];
                     const songList = [];
 
                     data.forEach((item) => {
+                        // Add unique albums
                         if (!albumList.some((album) => album.id === item.AlbumID)) {
                             albumList.push({
                                 id: item.AlbumID,
                                 name: item.AlbumName,
-                                image: item.AlbumImage || "default-album.jpg", // Placeholder if no image
+                                image: item.AlbumCover, // Use AlbumCover from the response
                             });
                         }
 
+                        // Add songs
                         songList.push({
                             id: item.SongID,
                             name: item.SongName,
                             albumID: item.AlbumID,
-                            image: item.SongImage || "default-song.jpg", // Placeholder if no image
+                            image: item.SongCover, // Use SongCover from the response
                         });
                     });
 
-                    setAlbums(albumList); // Update albums state
-                    setSongs(songList); // Update songs state
+                    // Update state
+                    setAlbums(albumList);
+                    setSongs(songList);
                 }
             })
             .catch((error) => {
@@ -51,10 +56,16 @@ export function ArtistProfile() {
             });
     }, [artistIDParam]);
 
+
+
     return (
         <div className="artist-container">
             <div className="artist-header">
-                <img src="/assets/sza-profile.jpeg" alt="artist" className="artist-picture" />
+                <img
+                    src={artistProfile || "/assets/default-profile.jpg"} // Fallback to default if artistProfile is empty
+                    alt={`${artistName}-profile`}
+                    className="artist-picture"
+                />
                 <h1 className="artist-name">{artistName}</h1>
             </div>
             <div className="artist-content">
