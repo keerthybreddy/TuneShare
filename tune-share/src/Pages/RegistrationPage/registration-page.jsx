@@ -1,8 +1,8 @@
 import './registration-page.css';
-import logo from '/tune-share/client/src/assets/logo.png';
-import userIcon from '/tune-share/client/src/assets/userIcon.png';
-import lockIcon from '/tune-share/client/src/assets/lockIcon.png';
-import email from '/tune-share/client/src/assets/email.png';
+import logo from '/tune-share/client/public/assets/logo.png';
+import userIcon from '/tune-share/client/public/assets/userIcon.png';
+import lockIcon from '/tune-share/client/public/assets/lockIcon.png';
+import email from '/tune-share/client/public/assets/email.png';
 import {Link} from "react-router-dom";
 export function RegistrationPage() {
     return (

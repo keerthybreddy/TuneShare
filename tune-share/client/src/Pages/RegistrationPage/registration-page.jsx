@@ -1,9 +1,4 @@
 import './registration-page.css';
-import logo from '../../assets/logo.png';
-import userIcon from '../../assets/userIcon.png';
-import lockIcon from '../../assets/lockIcon.png';
-import emailIcon from '../../assets/email.png';
-import name from '../../assets/name-icon.png';
 
 import {Link} from "react-router-dom";
 import { useState } from 'react';
@@ -30,29 +25,29 @@ export function RegistrationPage() {
 
     return (
         <div className="registration-container">
-            <img src={logo} alt="Logo" className="registration-logo" />
+            <img src="/assets/logo.png" alt="Logo" className="registration-logo" />
             <div className="registration-header">
                 <div className="text">WELCOME</div>
             </div>
             <div className="registration-inputs">
                 <div className="registration-input">
-                    <img src={userIcon} alt="Icons" className="registration-icons"/>
+                    <img src="/assets/userIcon.png" alt="Icons" className="registration-icons"/>
                     <input placeholder="Username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div className="registration-input">
-                    <img src={name} alt ="Icons" className="registration-icons"/>
+                    <img src="/assets/name-icon.png" alt ="Icons" className="registration-icons"/>
                     <input placeholder="First Name" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
                 </div>
                 <div className="registration-input">
-                    <img src={name} alt="Icons" className="registration-icons"/>
+                    <img src="/assets/name-icon.png" alt="Icons" className="registration-icons"/>
                     <input placeholder="Last Name" type="text"  value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                 </div>
                 <div className="registration-input">
-                    <img src={lockIcon} alt="Icons" className="registration-icons"/>
+                    <img src="/assets/lockIcon.png" alt="Icons" className="registration-icons"/>
                     <input placeholder="Password" type="password"  value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 <div className="registration-input">
-                    <img src={emailIcon} alt ="Icons" className="registration-icons"/>
+                    <img src="/assets/email.png" alt ="Icons" className="registration-icons"/>
                     <input placeholder="Email" type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <Link to="/user-login-page">Already Have an Account?</Link>

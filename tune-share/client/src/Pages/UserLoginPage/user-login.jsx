@@ -1,7 +1,4 @@
 import './user-login.css'
-import logo from '../../assets/logo.png'
-import userIcon from '../../assets/userIcon.png'
-import lockIcon from '../../assets/lockIcon.png'
 import {Link, Navigate} from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
@@ -39,18 +36,18 @@ export function UserLogin() {
 
     return (
         <div className="login-container">
-            <img src={logo} alt="logo" className="login-logo"/>
+            <img src="/assets/logo.png" alt="logo" className="login-logo"/>
             <div className="login-header">
                 <div className="text">Sign In</div>
                 <div className="underline"></div>
             </div>
             <div className="login-inputs">
                 <div className="login-input">
-                    <img src={userIcon} alt="icons" className="login-icons"/>
+                    <img src="/assets/userIcon.png" alt="icons" className="login-icons"/>
                     <input placeholder="Username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
                 </div>
                 <div className="login-input">
-                    <img src={lockIcon} alt="icons" className="login-icons"/>
+                    <img src="/assets/lockIcon.png" alt="icons" className="login-icons"/>
                     <input placeholder ="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 </div>
                 <Link to="/registration-page">Create an Account</Link>

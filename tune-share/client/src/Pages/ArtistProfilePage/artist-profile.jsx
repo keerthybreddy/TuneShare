@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import pfp from "../../assets/sza-profile.jpeg";
 
 export function ArtistProfile() {
     const [albums, setAlbums] = useState([]); // Array of albums with details
@@ -55,7 +54,7 @@ export function ArtistProfile() {
     return (
         <div className="artist-container">
             <div className="artist-header">
-                <img src={pfp} alt="artist" className="artist-picture" />
+                <img src="/assets/sza-profile.jpeg" alt="artist" className="artist-picture" />
                 <h1 className="artist-name">{artistName}</h1>
             </div>
             <div className="artist-content">

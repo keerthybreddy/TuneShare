@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import pfp from "../../assets/sza-profile.jpeg";
 import "./album-page.css";
 import "../ArtistProfilePage/artist-profile.css";
 
@@ -41,7 +40,7 @@ export function AlbumPage() {
     return (
         <div className="artist-container">
             <div className="artist-header">
-                <img src={pfp} alt="artist" className="artist-picture" />
+                <img src="/assets/sza-profile.jpeg" alt="artist" className="artist-picture" />
                 <h1 className="artist-name">{AlbumName || 'Loading Album...'}</h1>
                 <h2 className="artist-name">{ArtistName || 'Loading Artist...'}</h2>
             </div>
