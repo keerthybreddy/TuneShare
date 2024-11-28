@@ -55,7 +55,7 @@ app.post('/album-page/:albumIDParam', (req, res) => {
     const { albumIDParam } = req.params;
     console.log("PARAM: ", albumIDParam);
 
-    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName, Artists.ArtistName FROM Albums JOIN Artists ON Albums.ArtistID = Artists.ArtistID JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?;", [albumIDParam], (err, result) => {
+    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName, Artists.ArtistName, Artists.ImagePath AS ArtistProfile, Songs.ImagePath AS SongCover FROM Albums JOIN Artists ON Albums.ArtistID = Artists.ArtistID JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?;", [albumIDParam], (err, result) => {
         console.log("result:", result);
         if (result === 0) {
             console.log('Page not found.')
