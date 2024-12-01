@@ -48,6 +48,86 @@ app.post('/user-login-page', (req, res) => {
 })
 
 app.post('/album-page/:albumIDParam', (req, res) => {
+    const { albumIDParam } = req.params;
+
+    db.query(`
+        SELECT 
+            Albums.AlbumID, 
+            Albums.AlbumName, 
+            Albums.ArtistID, 
+            Songs.SongID, 
+            Songs.SongName, 
+            Artists.ArtistName, 
+            (SELECT url FROM Images WHERE type = 'artist' AND reference_id = Artists.ArtistID LIMIT 1) AS ArtistProfile,
+            (SELECT url FROM Images WHERE type = 'song' AND reference_id = Songs.SongID LIMIT 1) AS SongCover
+        FROM 
+            Albums
+        JOIN 
+            Artists ON Albums.ArtistID = Artists.ArtistID
+        JOIN 
+            Songs ON Albums.AlbumID = Songs.AlbumID
+        WHERE 
+            Albums.AlbumID = ?;
+    `, [albumIDParam], (err, result) => {
+        if (err) {
+            console.error("Database query error:", err);
+            return res.status(500).send("Internal server error");
+        }
+
+        if (result.length === 0) {
+            console.log('Page not found.');
+            return res.status(404).send('Page not found.');
+        } else {
+            console.log('Page found!');
+            return res.json(result);
+        }
+    });
+});
+
+app.post('/artist-profile/:artistIDParam', (req, res) => {
+    const { artistIDParam } = req.params;
+
+    db.query(`
+        SELECT 
+            Albums.AlbumID, 
+            Albums.AlbumName, 
+            (SELECT url FROM Images WHERE type = 'album' AND reference_id = Albums.AlbumID LIMIT 1) AS AlbumCover,
+            Songs.SongID, 
+            Songs.SongName, 
+            (SELECT url FROM Images WHERE type = 'song' AND reference_id = Songs.SongID LIMIT 1) AS SongCover,
+            Artists.ArtistID, 
+            Artists.ArtistName, 
+            (SELECT url FROM Images WHERE type = 'artist' AND reference_id = Artists.ArtistID LIMIT 1) AS ArtistProfile,
+            Genres.GenreName
+        FROM 
+            Artists
+        JOIN 
+            Albums ON Artists.ArtistID = Albums.ArtistID
+        JOIN 
+            Songs ON Albums.AlbumID = Songs.AlbumID
+        JOIN 
+            Genres ON Artists.GenreID = Genres.GenreID
+        WHERE 
+            Artists.ArtistID = ?;
+    `, [artistIDParam], (err, result) => {
+        if (err) {
+            console.error("Database query error:", err);
+            return res.status(500).send("Internal server error");
+        }
+
+        if (result.length === 0) {
+            console.log('Page not found.');
+            return res.status(404).send('Page not found.');
+        } else {
+            console.log('Page found!');
+            return res.json(result);
+        }
+    });
+});
+
+
+/*
+app.post('/album-page/:albumIDParam', (req, res) => {
     const AlbumID = req.body.AlbumID;
     const AlbumName = req.body.AlbumName;
     const ArtistID = req.body.ArtistID;
@@ -85,6 +165,7 @@ app.post('/artist-profile/:artistIDParam', (req, res) => {
         }
     })
 })
+ */
 
 
 app.get("/users-page", (req, res) => {
