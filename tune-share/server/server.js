@@ -125,49 +125,6 @@ app.post('/artist-profile/:artistIDParam', (req, res) => {
     });
 });
 
-
-/*
-app.post('/album-page/:albumIDParam', (req, res) => {
-    const AlbumID = req.body.AlbumID;
-    const AlbumName = req.body.AlbumName;
-    const ArtistID = req.body.ArtistID;
-
-    const { albumIDParam } = req.params;
-    console.log("PARAM: ", albumIDParam);
-
-    db.query("SELECT Albums.AlbumID, Albums.AlbumName, Albums.ArtistID, Songs.SongID, Songs.SongName, Artists.ArtistName, Artists.ImagePath AS ArtistProfile, Songs.ImagePath AS SongCover FROM Albums JOIN Artists ON Albums.ArtistID = Artists.ArtistID JOIN Songs ON Albums.AlbumID = Songs.AlbumID WHERE Albums.AlbumID = ?;", [albumIDParam], (err, result) => {
-        console.log("result:", result);
-        if (result === 0) {
-            console.log('Page not found.')
-            return res.send('Page not found.')
-        } else {
-            console.log('Page found!')
-            return res.send(result)
-        }
-    })
-})
-
-app.post('/artist-profile/:artistIDParam', (req, res) => {
-    const AlbumID = req.body.AlbumID;
-    const AlbumName = req.body.AlbumName;
-    const ArtistID = req.body.ArtistID;
-
-    const { artistIDParam } = req.params;
-
-    db.query(`SELECT Albums.AlbumID, Albums.AlbumName, Albums.ImagePath AS AlbumCover, Songs.SongID, Songs.SongName, Songs.ImagePath AS SongCover, Artists.ArtistID, Artists.ArtistName, Artists.ImagePath AS ArtistProfile, Genres.GenreName FROM Artists JOIN Albums ON Artists.ArtistID = Albums.ArtistID JOIN Songs ON Albums.AlbumID = Songs.AlbumID JOIN Genres ON Artists.GenreID = Genres.GenreID WHERE Artists.ArtistID = ?;`, [artistIDParam], (err, result) => {
-        console.log("result:", result);
-        if (result === 0) {
-            console.log('Page not found.')
-            return res.send('Page not found.')
-        } else {
-            console.log('Page found!')
-            return res.send(result)
-        }
-    })
-})
- */
-
-
 app.get("/users-page", (req, res) => {
     console.log(req.url);  // Log the full URL
     const currentUser = req.query.currUser;
@@ -436,7 +393,7 @@ app.get("/activity-board-page", (req, res) => {
     if (!currentUser) {
         return res.status(400).send({ error: "No current user provided" });
     }
-    const query = `SELECT User.username, Songs.SongName, Images.url, Albums.AlbumName, Artists.ArtistName, Genres.GenreName FROM User JOIN LikedSongs ON User.username = LikedSongs.userID JOIN Songs ON LikedSongs.SongID = Songs.SongID JOIN Albums ON Songs.AlbumID = Albums.AlbumID JOIN Artists ON Albums.ArtistID = Artists.ArtistID JOIN Genres ON Artists.GenreID = Genres.GenreID JOIN Friends ON User.username = Friends.friendID LEFT JOIN Images ON Images.type = 'song' AND Images.reference_id = Songs.SongID WHERE Friends.userID = ?`;
+    const query = `SELECT User.username, Songs.SongName, (SELECT url FROM Images WHERE type = 'song' AND reference_id = Songs.SongID LIMIT 1) AS ImagePath, Albums.AlbumName, Artists.ArtistName, Genres.GenreName FROM User JOIN LikedSongs ON User.username = LikedSongs.userID JOIN Songs ON LikedSongs.SongID = Songs.SongID JOIN Albums ON Songs.AlbumID = Albums.AlbumID JOIN Artists ON Albums.ArtistID = Artists.ArtistID JOIN Genres ON Artists.GenreID = Genres.GenreID JOIN Friends ON User.username = Friends.friendID LEFT JOIN Images ON Images.type = 'song' AND Images.reference_id = Songs.SongID WHERE Friends.userID = ?`;
     db.query(query, [currentUser], (err, results) => {
         if (err) {
             console.error(`Error fetching activity board content:`, err);
