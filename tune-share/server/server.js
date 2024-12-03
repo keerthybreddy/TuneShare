@@ -392,9 +392,6 @@ app.post("/add-to-liked-songs", (req, res) => {
     });
 });
 
-
-
-
 app.get("/liked-songs-list", (req, res) => {
     const currentUser = req.query.currUser;
 
@@ -434,5 +431,21 @@ app.post("/remove-liked-song", (req, res) => {
     });
 });
 
+app.get("/activity-board-page", (req, res) => {
+    const currentUser = req.query.currUser;
+    if (!currentUser) {
+        return res.status(400).send({ error: "No current user provided" });
+    }
+    const query = `SELECT User.username, Songs.SongName, Images.url, Albums.AlbumName, Artists.ArtistName, Genres.GenreName FROM User JOIN LikedSongs ON User.username = LikedSongs.userID JOIN Songs ON LikedSongs.SongID = Songs.SongID JOIN Albums ON Songs.AlbumID = Albums.AlbumID JOIN Artists ON Albums.ArtistID = Artists.ArtistID JOIN Genres ON Artists.GenreID = Genres.GenreID JOIN Friends ON User.username = Friends.friendID LEFT JOIN Images ON Images.type = 'song' AND Images.reference_id = Songs.SongID WHERE Friends.userID = ?`;
+    db.query(query, [currentUser], (err, results) => {
+        if (err) {
+            console.error(`Error fetching activity board content:`, err);
+            res.status(500).send({ error: "Failed to fetch activity board content" });
+        } else {
+            console.log("results:", results);
+            res.send(results);
+        }
+    });
+});
 
 app.listen(5000, () => {console.log("Server started on port 5000")})
