@@ -9,6 +9,7 @@ import {RegistrationPage} from "./Pages/RegistrationPage/registration-page";
 import {CatalogPage} from "./Pages/CatalogPage/catalog-page";
 import {UsersPage} from "./Pages/UsersPage/users-page";
 import {GenrePage} from "./Pages/GenrePage/genre-page";
+import {ActivityBoardPage} from "./Pages/ActivityBoardPage/activity-board-page";
 import axios from 'axios';
 import {AuthProvider} from "./context/AuthContext";
 
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/users-page/" element={<UsersPage />}/>
                   <Route path="/catalog-page" element={<CatalogPage />}/>
                   <Route path="/genre-page/:genreIDParam" element={<GenrePage />}/>
+                  <Route path="/activity-board-page/" element={<ActivityBoardPage />}/> 
               </Routes>
           </Router>
       </AuthProvider>

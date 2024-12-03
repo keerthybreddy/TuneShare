@@ -16,7 +16,6 @@ export function ArtistProfile() {
             .post(`http://localhost:5000/artist-profile/${artistIDParam}`)
             .then((response) => {
                 const data = response.data;
-
                 if (data.length > 0) {
                     // Set artist name, genre, and profile image
                     setArtistName(data[0].ArtistName);
