@@ -41,7 +41,7 @@ export function ArtistProfile() {
                             id: item.SongID,
                             name: item.SongName,
                             albumID: item.AlbumID,
-                            image: item.SongCover, // Use SongCover from the response
+                            cover: item.SongCover, // Use SongCover from the response
                         });
                     });
 
@@ -73,7 +73,7 @@ export function ArtistProfile() {
                     <ul className="song-list">
                         {songs.map((song, index) => (
                             <li key={index} className="song-item">
-                                <img src={song.image} alt="song-thumbnail" className="song-image" />
+                                <img src={song.cover} alt="song-thumbnail" className="song-image" />
                                 <a href={`http://localhost:3000/#/song/${song.id}`} className="song-name">
                                     {song.name}
                                 </a>

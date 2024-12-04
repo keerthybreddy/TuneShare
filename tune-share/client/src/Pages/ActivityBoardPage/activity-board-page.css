@@ -20,7 +20,6 @@
 
 .activity-board-card {
     display: flex;
-    align-items: left;
     justify-content: left;
     gap: 20px;
     background: #252323;
@@ -37,6 +36,7 @@
 
 .activity-board-song-container {
     display: flex;
+    gap: 20px;
 }
 
 .activity-board-song-metadata {
