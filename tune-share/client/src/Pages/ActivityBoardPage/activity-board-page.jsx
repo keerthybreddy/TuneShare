@@ -68,7 +68,7 @@ export function ActivityBoardPage() {
                                             <img
                                                 src={song.imagePath}
                                                 alt={`${song.songName}-cover`}
-                                                className="song-image"
+                                                className="activity-board-song-image"
                                             />
                                             <strong>{song.songName}</strong>
                                             
