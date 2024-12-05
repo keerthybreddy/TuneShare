@@ -27,3 +27,18 @@
     font-size: 30px; /* Adjust font size */
     margin: 5px 0; /* Add spacing between list items */
 }
+
+.navigation-buttons {
+
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+}
+
+.navigation-buttons button {
+    background: #252323;
+    color: white;
+    width: 100px;
+    height: 40px;
+}

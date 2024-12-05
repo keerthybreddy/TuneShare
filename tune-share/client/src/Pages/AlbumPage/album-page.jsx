@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
 import "./album-page.css";
 import "../ArtistProfilePage/artist-profile.css";
+import { useAuthContext } from "../../context/AuthContext";
+
 
 export function AlbumPage() {
     // State variables to store album data
+    const { currentUser } = useAuthContext();
     const [AlbumName, setAlbumName] = useState("");
     const [ArtistName, setArtistName] = useState("");
     const [ArtistProfile, setArtistProfile] = useState(""); // Store artist profile picture
     const [Songs, setSongs] = useState([]); // Array to hold songs with IDs, names, and covers
 
     let { albumIDParam } = useParams(); // Extract albumIDParam from URL parameters
+    const navigate = useNavigate();
+
+    const maxAlbumPages = 5;
 
     useEffect(() => {
         // Fetch album data
@@ -39,6 +45,26 @@ export function AlbumPage() {
                 console.error("Error fetching album data:", error);
             });
     }, [albumIDParam]);
+
+    // Handle navigation to previous page
+    const handleBack = () => {
+        let currentID = parseInt(albumIDParam, 10);
+        let previousID = currentID === 1 ? maxAlbumPages : currentID - 1;
+        navigate(`/album-page/${previousID}`);
+    };
+
+    // Handle navigation to next page
+    const handleNext = () => {
+        let currentID = parseInt(albumIDParam, 10);
+        let nextID = currentID === maxAlbumPages ? 1 : currentID + 1;
+        navigate(`/album-page/${nextID}`);
+    };
+
+    const handleMenu = () => {
+        navigate('/user-profile/', { state: { username: currentUser.username } });
+    };
+
+
 
     return (
         <div className="artist-container">
@@ -70,6 +96,12 @@ export function AlbumPage() {
                     )}
                 </ul>
             </div>
+            <div className="navigation-buttons">
+                <button onClick={handleBack}>Back</button>
+                <button onClick={handleMenu}>Menu</button>
+                <button onClick={handleNext}>Next</button>
+            </div>
+
         </div>
     );
 }

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
+import { useAuthContext } from "../../context/AuthContext";
+
 
 export function ArtistProfile() {
     const [albums, setAlbums] = useState([]); // Array of albums with details
@@ -8,8 +10,12 @@ export function ArtistProfile() {
     const [artistName, setArtistName] = useState(''); // Artist's name
     const [genre, setGenre] = useState(''); // Artist's genre
     const [artistProfile, setArtistProfile] = useState(""); // State for artist profile picture
+    const navigate = useNavigate();
+    const { currentUser } = useAuthContext();
 
+    const maxAlbumPages = 6;
     let { artistIDParam } = useParams(); // Get artist ID from the URL
+
 
     useEffect(() => {
         axios
@@ -56,6 +62,22 @@ export function ArtistProfile() {
     }, [artistIDParam]);
 
 
+    const handleBack = () => {
+        let currentID = parseInt(artistIDParam, 10);
+        let previousID = currentID === 1 ? maxAlbumPages : currentID - 1;
+        navigate(`/artist-profile/${previousID}`);
+    };
+
+    // Handle navigation to next page
+    const handleNext = () => {
+        let currentID = parseInt(artistIDParam, 10);
+        let nextID = currentID === maxAlbumPages ? 1 : currentID + 1;
+        navigate(`/artist-profile/${nextID}`);
+    };
+
+    const handleMenu = () => {
+        navigate('/user-profile/', { state: { username: currentUser.username } });
+    }
 
     return (
         <div className="artist-container">
@@ -100,6 +122,11 @@ export function ArtistProfile() {
                     <h2>Genre</h2>
                     <p>{genre}</p>
                 </div>
+            </div>
+            <div className="navigation-buttons">
+                <button onClick={handleBack}> Back </button>
+                <button onClick={handleMenu}> Menu </button>
+                <button onClick={handleNext}> Next </button>
             </div>
         </div>
     );
