@@ -164,9 +164,8 @@
 }
 
 .logout-button {
-    position: absolute;
-    right: 460px;
-    top: 175px;
+    position: relative;
+    margin-left: 55%;
     background-color: #181414;
     color: white;
     border: none;

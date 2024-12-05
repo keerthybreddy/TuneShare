@@ -18,6 +18,8 @@ export function GenrePage() {
     const navigate = useNavigate();
     let { genreIDParam } = useParams();
 
+    const maxGenrePages = 5;
+
     useEffect(() => {
         axios
             .post(`http://localhost:5000/genre-page/${genreIDParam}`, {})
@@ -99,6 +101,22 @@ export function GenrePage() {
             ...prevState,
             [songID]: !prevState[songID],
         }));
+    };
+
+    const handleBack = () => {
+        let currentID = parseInt(genreIDParam, 10);
+        let previousID = currentID === 1 ? maxGenrePages : currentID - 1;
+        navigate(`/genre-page/${previousID}`);
+    };
+
+    const handleNext = () => {
+        let currentID = parseInt(genreIDParam, 10);
+        let nextID = currentID === maxGenrePages ? 1 : currentID + 1;
+        navigate(`/genre-page/${nextID}`);
+    };
+
+    const handleMenu = () => {
+        navigate('/user-profile/', { state: { username: currentUser?.username } });
     };
 
     const handleMouseEnter = (songID) => {
@@ -229,6 +247,11 @@ export function GenrePage() {
                     </section>
                 </div>
             </main>
+            <div className="navigation-buttons">
+                <button onClick={handleBack}>Back</button>
+                <button onClick={handleMenu}>Menu</button>
+                <button onClick={handleNext}>Next</button>
+            </div>
         </div>
     );
 }
