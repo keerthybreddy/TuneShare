@@ -1,14 +1,14 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import "./activity-board-page.css";
-import "../ArtistProfilePage/artist-profile.css";
-import { useAuthContext } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import "./activity-board-page.css";
 
 export function ActivityBoardPage() {
-
     const { currentUser } = useAuthContext();
     const [activityBoardContent, setActivityBoardContent] = useState([]);
+    const [showNavigation, setShowNavigation] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchActivityBoardContent = async () => {
@@ -20,11 +20,10 @@ export function ActivityBoardPage() {
                 const response = await axios.get(
                     `http://localhost:5000/activity-board-page?currUser=${currentUser.username}`
                 );
-                console.log(response.data);
                 const groupByUsername = {};
 
                 response.data.forEach((friendEntry) => {
-                    if(!groupByUsername[friendEntry.username]) {
+                    if (!groupByUsername[friendEntry.username]) {
                         groupByUsername[friendEntry.username] = [];
                     }
                     groupByUsername[friendEntry.username].push({
@@ -32,14 +31,11 @@ export function ActivityBoardPage() {
                         imagePath: friendEntry.ImagePath,
                         albumName: friendEntry.AlbumName,
                         artistName: friendEntry.ArtistName,
-                        genreName: friendEntry.GenreName
-                    })
-
+                        genreName: friendEntry.GenreName,
+                    });
                 });
 
                 setActivityBoardContent(groupByUsername);
-                console.log(activityBoardContent);
-            
             } catch (error) {
                 console.error("Error fetching Activity Board:", error);
             }
@@ -47,45 +43,58 @@ export function ActivityBoardPage() {
         fetchActivityBoardContent();
     }, [currentUser]);
 
-    // console.log(activityBoardContent);
-
-    useEffect(() => {
-        console.log("Activity Board Content:", activityBoardContent);
-    }, [activityBoardContent]);  // Runs whenever userObjects changes
-
     return (
-        <div className="">
-            <div className="activity-board-container">
-                    <h1 className="activity-board-header-text">Listening Activity</h1>
-                    <ul>
-                        {Object.entries(activityBoardContent).map(([username, songs]) => (
-                            <div className="activity-board-card">
-                                <h2>{username}</h2>
-                                <ul>
-                                {songs.map((song, index) => (
-                                    <div className="activity-board-song-container">
-                                        <li key={index} className="activity-board-header-text">
-                                            <img
-                                                src={song.imagePath}
-                                                alt={`${song.songName}-cover`}
-                                                className="activity-board-song-image"
-                                            />
-                                            <strong>{song.songName}</strong>
-                                            
-                                        </li>
-                                        <div className="activity-board-metadata">
-                                            <p>Artist: {song.artistName}</p>
-                                            <p>Album: {song.albumName}</p>
-                                            <p>Genre: {song.genreName}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </ul>
+        <div className="activity-board-page-container">
+            <h1 className="activity-board-title">Listening Activity</h1>
+            <button
+                className="waffle-button"
+                onClick={() => setShowNavigation((prev) => !prev)}
+            >
+                ☰
+            </button>
+            {showNavigation && (
+                <div className="navigation-sidebar">
+                    <button
+                        onClick={() =>
+                            navigate("/user-profile", {
+                                state: { username: currentUser?.username },
+                            })
+                        }
+                    >
+                        Profile
+                    </button>
+                    <button onClick={() => navigate("/album-page/1")}>Albums Page</button>
+                    <button onClick={() => navigate("/artist-profile/1")}>Artist Profile</button>
+                    <button onClick={() => navigate("/users-page/")}>Users Page</button>
+                    <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
+                    <button onClick={() => navigate("/playlist-page/")}>Playlist Page</button>
                 </div>
-        </div>
-    )
+            )}
 
+            <div className="activity-boards">
+                {Object.entries(activityBoardContent).map(([username, songs]) => (
+                    <div key={username} className="activity-board-container">
+                        <h2 className="activity-board-username">{username}</h2>
+                        <div className="songs-list">
+                            {songs.map((song, index) => (
+                                <div key={index} className="song-item">
+                                    <img
+                                        src={song.imagePath}
+                                        alt={`${song.songName}-cover`}
+                                        className="song-image"
+                                    />
+                                    <div className="song-details">
+                                        <strong>{song.songName}</strong>
+                                        <p>Artist: {song.artistName}</p>
+                                        <p>Album: {song.albumName}</p>
+                                        <p>Genre: {song.genreName}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }

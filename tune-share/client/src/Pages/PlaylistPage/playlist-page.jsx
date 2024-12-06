@@ -87,6 +87,7 @@ export function PlaylistPage() {
           </button>
           <button onClick={() => navigate("/users-page/")}>Users Page</button>
           <button onClick={() => navigate("/catalog-page/")}>Catalog Page</button>
+          <button onClick={() => navigate("/activity-board-page/")}>Activity Board</button>
         </div>
       )}
 

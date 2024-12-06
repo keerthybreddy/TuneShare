@@ -1,3 +1,17 @@
+# TuneShare
+
+TuneShare is a web-based application that allows users to explore a database of songs, albums, and music artists along with their friends. TuneShare enables users to explore different genres of songs, albums, and artists, ‘favorite’ songs that they love, create and exchange playlists with others, add their friends on the application, and share tracks that they have favorited with their friends. The focus of this project was to deliver a user-friendly interface that facilitates music sharing and interaction between users.
+
+## Project Setup Instructions
+
+Before setting up the project, ensure you have the following installed:
+
+`Node.js` (v16.x or higher)
+
+`MySQL` (v8.x or higher)
+
+`npm` (Node Package Manager)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -45,9 +59,9 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ## Steps to Push to Remote Repository
 
-### 1. Navigate to your projet folder
+### 1. Navigate to your project folder
 
-cd path/to/your/project     
+cd path/to/your/project
 
 ### 2. Check current status
 
@@ -55,15 +69,15 @@ git status
 
 ### 3. Stage all changes
 
-git add .                        
+git add .
 
 ### 4. Commit Changes with a message
 
-git commit -m "Your commit message" 
+git commit -m "Your commit message"
 
 ### 5. Push to the remote Repository
 
-git push origin main             
+git push origin main
 
 ## Learn More
 
