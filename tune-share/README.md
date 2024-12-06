@@ -33,6 +33,7 @@ Create a MySQL database named “TuneShareDB”.
 Run the provided schema.sql file to create tables:
 
 createdb.sql
+
 addvalues.sql
 
 4. **Install dependencies**
