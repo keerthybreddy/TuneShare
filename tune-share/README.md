@@ -13,9 +13,9 @@ Before setting up the project, ensure you have the following installed:
 `npm` (Node Package Manager)
 
 ---
-##Project Setup Instructions 
+## Project Setup Instructions 
 
-###Prerequisites
+### Prerequisites
 
 Before setting up TuneShare, ensure the following software is installed:
 
