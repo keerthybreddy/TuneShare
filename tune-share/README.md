@@ -70,9 +70,25 @@ Developing the albums page
 Developing the artists page
 
 
+Implemented Navigation Buttons
+
+
+
+
 ### Jadon Camacho
 Database Integration
-Developing Users Page
+
+
+Contributed to Development of Users Page
+
+
+General Debugging of Application
+
+
+Optimized the layout and styling of application using CSS 
+
+
+Database Schema Normalization
 
 
 ### Katherine Yee
