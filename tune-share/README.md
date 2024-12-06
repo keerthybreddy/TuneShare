@@ -62,7 +62,11 @@ Run the command `npm run start`
 
 ### Andrian Than
 Designed the Application UI Format
+
+
 Developing the albums page
+
+
 Developing the artists page
 
 
@@ -73,14 +77,26 @@ Developing Users Page
 
 ### Katherine Yee
 User’s liked songs and friends(follow/unfollow users) functionality
+
+
 Built playlist page, shows songs in playlist and option to remove songs
+
+
 Option to add songs to playlists from genre page
+
+
 Frontend/UI for users page, catalog page, genre page, playlist page, activity board
+
+
 Implemented waffle navigation popup
 
 ### Keerthy Reddy
 Set up the initial React application, Node.js and Express.js backend, and MySQL setup
+
+
 Built the Activity Board page
+
+
 Worked on backend for the Catalog page and the Genre Pages
 
 ---
