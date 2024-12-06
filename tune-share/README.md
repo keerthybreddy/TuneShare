@@ -94,4 +94,6 @@ Built the Activity Board page
 
 Worked on backend for the Catalog page and the Genre Pages
 
+Implemented custom URL parameterizing for page routes
+
 ---
