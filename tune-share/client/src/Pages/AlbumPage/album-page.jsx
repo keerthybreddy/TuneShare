@@ -17,7 +17,7 @@ export function AlbumPage() {
     let { albumIDParam } = useParams(); // Extract albumIDParam from URL parameters
     const navigate = useNavigate();
 
-    const maxAlbumPages = 5;
+    const maxAlbumPages = 12;
 
     useEffect(() => {
         // Fetch album data
