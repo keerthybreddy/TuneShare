@@ -92,7 +92,7 @@ Set up the initial React application, Node.js and Express.js backend, and MySQL 
 
 Built the Activity Board page
 
-Worked on backend for the Catalog page and the Genre Pages
+Built backend for the Catalog page, Genre Pages, User Login and Registration pages
 
 Implemented custom URL parameterizing for page routes
 
