@@ -12,99 +12,72 @@ Before setting up the project, ensure you have the following installed:
 
 `npm` (Node Package Manager)
 
-# Getting Started with Create React App
+---
+##Project Setup Instructions 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+###Prerequisites
 
-## Available Scripts
+Before setting up TuneShare, ensure the following software is installed:
 
-# To run the frontend, cd into the client subdirectory and run:
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- [MySQL](https://www.mysql.com/)
 
-### `npm start`
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/keerthybreddy/TuneShare.git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. **Configuring the Database**
+Create a MySQL database named “TuneShareDB”.
+Run the provided schema.sql file to create tables:
+createdb.sql
+addvalues.sql
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3. **Install dependencies**
+Navigate to tune-share/ 
+Run command `npm install`
 
-### `npm test`
+Navigate to tune-share/server/
+Run command `npm install`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Navigate to tune-share/client/
+Run command `npm install`
 
-### `npm run build`
+4. **Application Setup**
+Navigate to tune-share/server/server.js file
+In line 15, replace “password” field with your MySQL account password
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. **Start the application**
+Navigate to backend of application: tune-share/server/
+Run the command `npm run dev`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Navigate to the front end of the application: tune-share/client/
+Run the command `npm run start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Division of Work
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Andrian Than
+Designed the Application UI Format
+Developing the albums page
+Developing the artists page
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Jadon Camacho
+Database Integration
+Developing Users Page
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-# To run the backend, cd into the server directory and run:
+### Katherine Yee
+User’s liked songs and friends(follow/unfollow users) functionality
+Built playlist page, shows songs in playlist and option to remove songs
+Option to add songs to playlists from genre page
+Frontend/UI for users page, catalog page, genre page, playlist page, activity board
+Implemented waffle navigation popup
 
-`npm run dev`
+### Keerthy Reddy
+Set up the initial React application, Node.js and Express.js backend, and MySQL setup
+Built the Activity Board page
+Worked on backend for the Catalog page and the Genre Pages
 
-## Steps to Push to Remote Repository
-
-### 1. Navigate to your project folder
-
-cd path/to/your/project
-
-### 2. Check current status
-
-git status
-
-### 3. Stage all changes
-
-git add .
-
-### 4. Commit Changes with a message
-
-git commit -m "Your commit message"
-
-### 5. Push to the remote Repository
-
-git push origin main
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
