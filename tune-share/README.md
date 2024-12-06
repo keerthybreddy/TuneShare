@@ -29,11 +29,13 @@ Before setting up TuneShare, ensure the following software is installed:
 
 2. **Configuring the Database**
 Create a MySQL database named “TuneShareDB”.
+
 Run the provided schema.sql file to create tables:
+
 createdb.sql
 addvalues.sql
 
-3. **Install dependencies**
+4. **Install dependencies**
 Navigate to tune-share/ 
 Run command `npm install`
 
