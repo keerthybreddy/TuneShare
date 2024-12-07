@@ -76,6 +76,8 @@ Optimized the layout and styling of application using CSS
 
 Database Schema Normalization
 
+Managed indexing for query optimization
+
 ### Katherine Yee
 User’s liked songs and friends(follow/unfollow users) functionality
 
